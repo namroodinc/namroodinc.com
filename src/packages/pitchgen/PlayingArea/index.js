@@ -1,3 +1,3 @@
-import { SoccerPitch } from "./Soccer";
+import SoccerPitch from "./Soccer";
 
 export { SoccerPitch };
