@@ -36,14 +36,6 @@ function BasketballCourt(props) {
         />
       </g>
       <g>
-        <circle
-          cx={width * 0.05625}
-          cy={height / 2}
-          r={height * 0.0152}
-          fill="none"
-          stroke={strokeColor}
-          strokeWidth={strokeWidth}
-        />
         <path
           d={d3.arc()({
             innerRadius: width * 0.04464,
@@ -56,12 +48,29 @@ function BasketballCourt(props) {
           stroke={strokeColor}
           strokeWidth={strokeWidth}
         />
+        <circle
+          cx={width * 0.05625}
+          cy={height / 2}
+          r={height * 0.0152}
+          fill="none"
+          stroke={strokeColor}
+          strokeWidth={strokeWidth}
+        />
         <rect
           x={width * 0.0325}
           y={height / 2 - height * 0.06}
           width={width * 0.0075}
           height={height * 0.1201}
           fill={fillColor}
+          stroke={strokeColor}
+          strokeWidth={strokeWidth}
+        />
+        {/* line from centre of the above circle to the centre of the above rectangle */}
+        <line
+          x1={width * 0.05}
+          y1={height / 2}
+          x2={width * 0.0325 + width * 0.0075}
+          y2={height / 2}
           stroke={strokeColor}
           strokeWidth={strokeWidth}
         />
