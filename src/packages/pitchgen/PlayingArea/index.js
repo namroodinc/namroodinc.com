@@ -1,3 +1,4 @@
+import BasketballCourt from "./Basketball";
 import SoccerPitch from "./Soccer";
 
-export { SoccerPitch };
+export { BasketballCourt, SoccerPitch };
