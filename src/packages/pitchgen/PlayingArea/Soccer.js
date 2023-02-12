@@ -172,6 +172,33 @@ function SoccerPitch(props) {
               strokeWidth={strokeWidth}
             />
           </g>
+          {/* show dashed grid dividing the pitch up into 10 boxes wide and 5 high */}
+          {/* <g>
+            {d3.range(0, 10).map((i) => (
+              <line
+                key={i}
+                x1={width * (i / 10)}
+                y1={0}
+                x2={width * (i / 10)}
+                y2={height}
+                stroke={strokeColor}
+                strokeWidth={strokeWidth}
+                strokeDasharray="5, 5"
+              />
+            ))}
+            {d3.range(0, 5).map((i) => (
+              <line
+                key={i}
+                x1={0}
+                y1={height * (i / 5)}
+                x2={width}
+                y2={height * (i / 5)}
+                stroke={strokeColor}
+                strokeWidth={strokeWidth}
+                strokeDasharray="5, 5"
+              />
+            ))}
+          </g> */}
         </g>
       </g>
       {/* players layer */}
