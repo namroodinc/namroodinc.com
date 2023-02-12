@@ -65,7 +65,6 @@ function BasketballCourt(props) {
           stroke={strokeColor}
           strokeWidth={strokeWidth}
         />
-        {/* line from centre of the above circle to the centre of the above rectangle */}
         <line
           x1={width * 0.05}
           y1={height / 2}

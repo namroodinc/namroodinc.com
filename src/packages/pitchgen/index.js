@@ -1,4 +1,5 @@
 import React from "react";
+// import { flagsWithClass } from "../places";
 
 import { BasketballCourt, SoccerPitch } from "./PlayingArea";
 
@@ -9,7 +10,7 @@ export default function PitchGen() {
       <>
         <h2>Basketball</h2>
         <BasketballCourt />
-        <BasketballCourt isHorizontal={false} />
+        <BasketballCourt fillColor="red" width={360} height={192} />
       </>
       <>
         <h2>Soccer</h2>
