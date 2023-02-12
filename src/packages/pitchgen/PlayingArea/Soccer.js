@@ -1,13 +1,21 @@
 import React from "react";
 import propTypes from "prop-types";
 import * as d3 from "d3";
+import { PlayerGrouper } from "../Players";
 
 // SoccerPitch is a React component that renders a soccer pitch.
 // The pitch is 120 yards long and 80 yards wide. The default width and height for the React component are 720px and 480px, respectively.
 
 function SoccerPitch(props) {
-  const { fillColor, height, isHorizontal, padding, strokeColor, width } =
-    props;
+  const {
+    fillColor,
+    height,
+    isHorizontal,
+    padding,
+    strokeColor,
+    teams,
+    width
+  } = props;
 
   const strokeWidth = 1;
 
@@ -166,6 +174,20 @@ function SoccerPitch(props) {
           </g>
         </g>
       </g>
+      {/* players layer */}
+      <g transform={`translate(${padding}, ${padding})`}>
+        {teams.map((team, i) => (
+          <PlayerGrouper
+            key={i}
+            height={height}
+            isHorizontal={isHorizontal}
+            padding={padding}
+            width={width / teams.length}
+            index={i}
+            {...team}
+          />
+        ))}
+      </g>
     </svg>
   );
 }
@@ -176,6 +198,7 @@ SoccerPitch.defaultProps = {
   isHorizontal: true,
   padding: 20,
   strokeColor: "white",
+  teams: [],
   width: 720 // a soccer pitch is 120 yards long
 };
 
@@ -185,6 +208,7 @@ SoccerPitch.propTypes = {
   isHorizontal: propTypes.bool,
   padding: propTypes.number,
   strokeColor: propTypes.string,
+  teams: propTypes.array,
   width: propTypes.number
 };
 
