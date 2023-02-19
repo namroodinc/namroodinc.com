@@ -7,9 +7,11 @@ const BlogPostList = observer(() => {
 
   return (
     <div className="blog-post-list">
-      <button onClick={blogPostStore.fetchBlogPostList}>
-        Fetch Blog Post List
-      </button>
+      {blogPostStore.showMore && (
+        <button onClick={blogPostStore.fetchBlogPostList}>
+          Fetch Blog Post List
+        </button>
+      )}
       {blogPostStore.blogPostList.map((post) => (
         <div className="blog-post" key={post.id}>
           <h3>{post.headline}</h3>
