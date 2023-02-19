@@ -17,7 +17,8 @@ export class BlogPostStore {
       limit: observable,
       showMore: observable,
       fetchBlogPostList: action,
-      fetchBlogPost: action
+      fetchBlogPost: action,
+      setBlogPostAsNull: action
     });
   }
 
@@ -61,11 +62,21 @@ export class BlogPostStore {
     const response = await fetch(url);
     const data = await response.json();
 
+    const mainImage = await fetch(`/assets/${data.fields.mainImage.sys.id}`);
+    const mainImageData = await mainImage.json();
+
     this.blogPost = {
       id: data.sys.id,
       headline: data.fields.headline,
       createdAt: data.sys.createdAt,
-      body: data.fields.blogPostBody
+      body: data.fields.blogPostBody,
+      image: {
+        url: mainImageData.fields.file.url
+      }
     };
+  };
+
+  setBlogPostAsNull = () => {
+    this.blogPost = null;
   };
 }
