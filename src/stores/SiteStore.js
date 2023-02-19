@@ -1,4 +1,4 @@
-import { action, makeObservable, observable } from "mobx";
+import { makeObservable, observable } from "mobx";
 
 export class SiteStore {
   email = process.env.REACT_APP_MY_EMAIL;
@@ -15,12 +15,7 @@ export class SiteStore {
       linkedIn: observable,
       name: observable,
       twitter: observable,
-      siteName: observable,
-      changeSiteName: action
+      siteName: observable
     });
   }
-
-  changeSiteName = (name) => {
-    this.siteName = name;
-  };
 }

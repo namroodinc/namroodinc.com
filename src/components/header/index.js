@@ -8,12 +8,6 @@ const Header = observer(() => {
   return (
     <header className="header">
       <h1 className="header__title">{siteStore.siteName}</h1>
-      <button
-        className="header__button"
-        onClick={() => siteStore.changeSiteName("off---white")}
-      >
-        Button
-      </button>
     </header>
   );
 });

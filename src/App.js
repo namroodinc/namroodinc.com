@@ -1,6 +1,6 @@
+import BlogPostList from "./components/blogPostList";
 import Footer from "./components/footer";
 import Header from "./components/header";
-import Post from "./components/post";
 import { StoresProvider, stores } from "./stores";
 
 function App() {
@@ -9,7 +9,7 @@ function App() {
       <StoresProvider value={stores}>
         <Header />
         <h1>test</h1>
-        <Post />
+        <BlogPostList />
         <Footer />
       </StoresProvider>
     </>
