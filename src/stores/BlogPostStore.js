@@ -3,6 +3,7 @@ import { action, makeObservable, observable } from "mobx";
 export class BlogPostStore {
   assets = [];
   blogPostList = [];
+  blogPost = null;
   skip = 0;
   limit = 12;
   showMore = true;
@@ -11,10 +12,12 @@ export class BlogPostStore {
     makeObservable(this, {
       assets: observable,
       blogPostList: observable,
+      blogPost: observable,
       skip: observable,
       limit: observable,
       showMore: observable,
-      fetchBlogPostList: action
+      fetchBlogPostList: action,
+      fetchBlogPost: action
     });
   }
 
@@ -51,5 +54,18 @@ export class BlogPostStore {
         };
       })
     ];
+  };
+
+  fetchBlogPost = async (id) => {
+    const url = `/entries/${id}`;
+    const response = await fetch(url);
+    const data = await response.json();
+
+    this.blogPost = {
+      id: data.sys.id,
+      headline: data.fields.headline,
+      createdAt: data.sys.createdAt,
+      body: data.fields.blogPostBody
+    };
   };
 }

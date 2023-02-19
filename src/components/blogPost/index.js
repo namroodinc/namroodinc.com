@@ -1,15 +1,27 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { observer } from "mobx-react-lite";
+import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 
 import { useStore } from "../../stores";
+import { useParams } from "react-router-dom";
 
-const BlogPost = observer(() => {
-  const siteStore = useStore("siteStore");
+const BlogPost = observer((props) => {
+  const blogPostStore = useStore("blogPostStore");
+  const { blogPost } = blogPostStore;
+  const { id } = useParams();
+
+  useEffect(() => {
+    blogPostStore.fetchBlogPost(id);
+  }, [blogPostStore, id]);
+
+  if (!blogPost) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="BlogPost">
-      <h2>{siteStore.siteName}</h2>
-      <p>Hey, I am a post.</p>
+      <h1>{blogPost.headline}</h1>
+      {documentToReactComponents(blogPost.body)}
     </div>
   );
 });

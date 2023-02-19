@@ -6,8 +6,6 @@ import { Link } from "react-router-dom";
 const BlogPostList = observer(() => {
   const blogPostStore = useStore("blogPostStore");
 
-  console.log(blogPostStore.blogPostList);
-
   return (
     <div className="blog-post-list">
       {blogPostStore.showMore && (
