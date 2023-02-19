@@ -1,18 +1,21 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import BlogPost from "./components/blogPost";
 import BlogPostList from "./components/blogPostList";
-import Footer from "./components/footer";
-import Header from "./components/header";
+import Layout from "./components/layout";
 import { StoresProvider, stores } from "./stores";
 
 function App() {
   return (
-    <>
+    <BrowserRouter>
       <StoresProvider value={stores}>
-        <Header />
-        <h1>test</h1>
-        <BlogPostList />
-        <Footer />
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<BlogPostList />} />
+            <Route path="post/:id" element={<BlogPost />} />
+          </Route>
+        </Routes>
       </StoresProvider>
-    </>
+    </BrowserRouter>
   );
 }
 
