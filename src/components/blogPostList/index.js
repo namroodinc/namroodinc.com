@@ -5,6 +5,8 @@ import { useStore } from "../../stores";
 const BlogPostList = observer(() => {
   const blogPostStore = useStore("blogPostStore");
 
+  console.log(blogPostStore.blogPostList);
+
   return (
     <div className="blog-post-list">
       {blogPostStore.showMore && (
@@ -14,6 +16,7 @@ const BlogPostList = observer(() => {
       )}
       {blogPostStore.blogPostList.map((post) => (
         <div className="blog-post" key={post.id}>
+          {/* <img src={post.image.url} alt={post.headline} /> */}
           <h3>{post.headline}</h3>
         </div>
       ))}

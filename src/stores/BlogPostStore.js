@@ -28,13 +28,26 @@ export class BlogPostStore {
       this.showMore = false;
     }
 
+    this.assets = [
+      ...this.assets,
+      ...data.includes.Asset.map((asset) => {
+        return {
+          id: asset.sys.id,
+          url: asset.fields.file.url
+        };
+      })
+    ];
+
     this.blogPostList = [
       ...this.blogPostList,
       ...data.items.map((item) => {
         return {
           id: item.sys.id,
           headline: item.fields.headline,
-          createdAt: item.sys.createdAt
+          createdAt: item.sys.createdAt,
+          image: this.assets.find(
+            (asset) => asset.id === item.fields.mainImage.sys.id
+          )
         };
       })
     ];
