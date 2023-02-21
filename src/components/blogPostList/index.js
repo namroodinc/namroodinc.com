@@ -2,9 +2,9 @@ import React from "react";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../stores";
 import { Link } from "react-router-dom";
+import Asset from "../asset";
 
 const BlogPostList = observer(() => {
-  const assetsStore = useStore("assetsStore");
   const blogPostStore = useStore("blogPostStore");
 
   return (
@@ -15,14 +15,9 @@ const BlogPostList = observer(() => {
         </button>
       )}
       {blogPostStore.blogPostList.map((post) => {
-        const mainImage = assetsStore.assets.find(
-          (asset) => asset.id === post.mainImageId
-        );
         return (
           <div className="blog-post" key={post.id}>
-            {mainImage && (
-              <img src={`${mainImage.url}?w=500`} alt={post.headline} />
-            )}
+            <Asset imageId={post.mainImageId} />
             <h3>
               <Link to={`/post/${post.id}`}>{post.headline}</Link>
             </h3>

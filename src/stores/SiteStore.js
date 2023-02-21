@@ -5,7 +5,7 @@ export class SiteStore {
   github = process.env.REACT_APP_MY_GITHUB;
   linkedIn = process.env.REACT_APP_MY_LINKEDIN;
   name = process.env.REACT_APP_MY_NAME;
-  theme = "light";
+  theme = localStorage.getItem("theme") || "light";
   twitter = process.env.REACT_APP_MY_TWITTER;
   siteName = "namrood---inc";
 
@@ -24,5 +24,6 @@ export class SiteStore {
 
   setTheme = (theme) => {
     this.theme = theme;
+    localStorage.setItem("theme", theme);
   };
 }

@@ -20,7 +20,7 @@ export class AssetsStore {
     this.assets = data.items.map((item) => {
       return {
         id: item.sys.id,
-        url: item.fields.file.url
+        ...item.fields
       };
     });
   };

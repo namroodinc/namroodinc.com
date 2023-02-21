@@ -1,0 +1,19 @@
+// using css vars, add a .layout class which has a light and a dark theme as a data attribute and a background color which is set to the value of the css var and add text, border and background colors to the .layout class
+
+.layout[data-theme="light"] {
+  --bg-color: #fff;
+  --text-color: #000;
+  --border-color: #000;
+}
+
+.layout[data-theme="dark"] {
+  --bg-color: #000;
+  --text-color: #fff;
+  --border-color: #fff;
+}
+
+.layout {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  border-color: var(--border-color);
+}

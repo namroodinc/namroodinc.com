@@ -5,11 +5,14 @@ import { useStore } from "../../stores";
 import Footer from "../footer";
 import Header from "../header";
 
+// import styles module
+import styles from "./styles.module.scss";
+
 const Layout = observer(() => {
   const siteStore = useStore("siteStore");
 
   return (
-    <div data-theme={siteStore.theme}>
+    <div className={styles.layout} data-theme={siteStore.theme}>
       <Header />
       <div>
         <Outlet />
