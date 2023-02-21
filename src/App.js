@@ -4,6 +4,8 @@ import BlogPostList from "./components/blogPostList";
 import Layout from "./components/layout";
 import { StoresProvider, stores } from "./stores";
 
+import "./App.css";
+
 function App() {
   return (
     <BrowserRouter>
