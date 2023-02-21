@@ -2,11 +2,13 @@ import React from "react";
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../stores";
 
+import styles from "./styles.module.scss";
+
 const Footer = observer(() => {
   const siteStore = useStore("siteStore");
 
   return (
-    <footer className="footer">
+    <footer className={styles.footer}>
       <p className="footer__text">{siteStore.siteName}</p>
       <ul>
         <li>
