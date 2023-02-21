@@ -1,7 +1,6 @@
 import { action, makeObservable, observable } from "mobx";
 
 export class BlogPostStore {
-  assets = [];
   blogPostList = [];
   blogPost = null;
   skip = 0;
@@ -10,7 +9,6 @@ export class BlogPostStore {
 
   constructor() {
     makeObservable(this, {
-      assets: observable,
       blogPostList: observable,
       blogPost: observable,
       skip: observable,
@@ -32,16 +30,6 @@ export class BlogPostStore {
       this.showMore = false;
     }
 
-    this.assets = [
-      ...this.assets,
-      ...data.includes.Asset.map((asset) => {
-        return {
-          id: asset.sys.id,
-          url: asset.fields.file.url
-        };
-      })
-    ];
-
     this.blogPostList = [
       ...this.blogPostList,
       ...data.items.map((item) => {
@@ -49,9 +37,7 @@ export class BlogPostStore {
           id: item.sys.id,
           headline: item.fields.headline,
           createdAt: item.sys.createdAt,
-          image: this.assets.find(
-            (asset) => asset.id === item.fields.mainImage.sys.id
-          )
+          mainImageId: item.fields.mainImage.sys.id
         };
       })
     ];
@@ -62,17 +48,12 @@ export class BlogPostStore {
     const response = await fetch(url);
     const data = await response.json();
 
-    const mainImage = await fetch(`/assets/${data.fields.mainImage.sys.id}`);
-    const mainImageData = await mainImage.json();
-
     this.blogPost = {
       id: data.sys.id,
       headline: data.fields.headline,
       createdAt: data.sys.createdAt,
       body: data.fields.blogPostBody,
-      image: {
-        url: mainImageData.fields.file.url
-      }
+      mainImageId: data.fields.mainImage.sys.id
     };
   };
 

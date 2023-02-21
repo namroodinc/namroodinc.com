@@ -4,7 +4,7 @@ module.exports = function (app) {
   const contentfulBaseUrl = `https://cdn.contentful.com/spaces/${process.env.REACT_APP_CONTENTFUL_SPACE_ID}/environments/${process.env.REACT_APP_CONTENTFUL_ENVIRONMENT_ID}`;
 
   app.use(
-    "/assets/:assetId",
+    "/assets",
     createProxyMiddleware({
       target: contentfulBaseUrl,
       changeOrigin: true,

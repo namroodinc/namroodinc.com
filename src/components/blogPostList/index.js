@@ -4,6 +4,7 @@ import { useStore } from "../../stores";
 import { Link } from "react-router-dom";
 
 const BlogPostList = observer(() => {
+  const assetsStore = useStore("assetsStore");
   const blogPostStore = useStore("blogPostStore");
 
   return (
@@ -13,14 +14,21 @@ const BlogPostList = observer(() => {
           Fetch Blog Post List
         </button>
       )}
-      {blogPostStore.blogPostList.map((post) => (
-        <div className="blog-post" key={post.id}>
-          {/* <img src={post.image.url} alt={post.headline} /> */}
-          <h3>
-            <Link to={`/post/${post.id}`}>{post.headline}</Link>
-          </h3>
-        </div>
-      ))}
+      {blogPostStore.blogPostList.map((post) => {
+        const mainImage = assetsStore.assets.find(
+          (asset) => asset.id === post.mainImageId
+        );
+        return (
+          <div className="blog-post" key={post.id}>
+            {mainImage && (
+              <img src={`${mainImage.url}?w=500`} alt={post.headline} />
+            )}
+            <h3>
+              <Link to={`/post/${post.id}`}>{post.headline}</Link>
+            </h3>
+          </div>
+        );
+      })}
     </div>
   );
 });
