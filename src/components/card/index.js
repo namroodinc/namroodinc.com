@@ -22,8 +22,8 @@ const Card = ({ title, image, content, footer }) => {
 // set prop types
 Card.propTypes = {
   title: PropTypes.string.isRequired,
-  image: PropTypes.string.isRequired,
-  content: PropTypes.string.isRequired,
+  image: PropTypes.element,
+  content: PropTypes.element,
   footer: PropTypes.element.isRequired
 };
 

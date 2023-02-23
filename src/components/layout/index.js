@@ -14,7 +14,7 @@ const Layout = observer(() => {
   return (
     <div className={styles.layout} data-theme={siteStore.theme}>
       <Header />
-      <div>
+      <div className={styles.content}>
         <Outlet />
       </div>
       <Footer />
