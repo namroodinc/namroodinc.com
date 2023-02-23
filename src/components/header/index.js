@@ -4,6 +4,7 @@ import { useStore } from "../../stores";
 import { Link } from "react-router-dom";
 
 import styles from "./styles.module.scss";
+import Button from "../button";
 
 const Header = observer(() => {
   const siteStore = useStore("siteStore");
@@ -14,14 +15,12 @@ const Header = observer(() => {
         <Link to="/">{siteStore.siteName}</Link>
       </h1>
 
-      <button
-        className="header__theme-toggle"
-        onClick={() => {
-          siteStore.setTheme(siteStore.theme === "light" ? "dark" : "light");
-        }}
-      >
-        {siteStore.theme === "light" ? "🌙" : "☀️"}
-      </button>
+      <Button
+        label={siteStore.theme === "light" ? "🌙" : "☀️"}
+        onClick={() =>
+          siteStore.setTheme(siteStore.theme === "light" ? "dark" : "light")
+        }
+      />
     </header>
   );
 });

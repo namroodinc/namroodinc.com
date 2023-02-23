@@ -18,6 +18,8 @@ export class BlogPostStore {
       fetchBlogPost: action,
       setBlogPostAsNull: action
     });
+
+    this.fetchBlogPostList();
   }
 
   fetchBlogPostList = async () => {

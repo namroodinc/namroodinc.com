@@ -11,13 +11,6 @@ const BlogPostList = observer(() => {
 
   return (
     <div className="blog-post-list">
-      {blogPostStore.showMore && (
-        <Button
-          fullWidth
-          label="Fetch Blog Post List"
-          onClick={blogPostStore.fetchBlogPostList}
-        />
-      )}
       {blogPostStore.blogPostList.map((post) => {
         return (
           <Card
@@ -28,6 +21,13 @@ const BlogPostList = observer(() => {
           />
         );
       })}
+      {blogPostStore.showMore && (
+        <Button
+          fullWidth
+          label="Fetch Blog Post List"
+          onClick={blogPostStore.fetchBlogPostList}
+        />
+      )}
     </div>
   );
 });

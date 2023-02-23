@@ -1,0 +1,9 @@
+$increment: 4px;
+
+$xs: calc($increment * 0.5);
+$sm: calc($increment * 1);
+$md: calc($increment * 2);
+$lg: calc($increment * 4);
+$xl: calc($increment * 6);
+
+$transition: 0.15s ease-in-out;

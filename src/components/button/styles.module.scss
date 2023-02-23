@@ -1,3 +1,6 @@
+// include global scss
+@import "../../global";
+
 .button {
   background-color: var(--bg-color);
   border: 1px solid var(--border-color);
@@ -8,18 +11,18 @@
 
   &.small {
     font-size: 0.8em;
-    min-height: 24px;
-    padding: 12px;
+    min-height: calc($increment * 6);
+    padding: $md;
   }
   &.medium {
     font-size: 0.875em;
-    min-height: 32px;
-    padding: 16px;
+    min-height: calc($increment * 8);
+    padding: $lg;
   }
   &.large {
     font-size: 1.2em;
-    min-height: 40px;
-    padding: 24px;
+    min-height: calc($increment * 10);
+    padding: $xl;
   }
 
   &.fullWidth {
@@ -37,7 +40,6 @@
     color: var(--button-hover-text-color);
 
     // animate hover
-    transition: background-color 0.15s ease-in-out,
-      border-color 0.15s ease-in-out, color 0.15s ease-in-out;
+    transition: all $transition;
   }
 }
