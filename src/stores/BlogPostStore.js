@@ -4,7 +4,7 @@ export class BlogPostStore {
   blogPostList = [];
   blogPost = null;
   skip = 0;
-  limit = 12;
+  limit = 1; //12;
   showMore = true;
 
   constructor() {

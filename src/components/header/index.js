@@ -6,6 +6,9 @@ import { Link } from "react-router-dom";
 import styles from "./styles.module.scss";
 import Button from "../button";
 
+import { ReactComponent as SunIcon } from "../../icons/sun.svg";
+import { ReactComponent as CrescentIcon } from "../../icons/crescent.svg";
+
 const Header = observer(() => {
   const siteStore = useStore("siteStore");
 
@@ -16,7 +19,8 @@ const Header = observer(() => {
       </h1>
 
       <Button
-        label={siteStore.theme === "light" ? "🌙" : "☀️"}
+        icon={siteStore.theme === "light" ? <CrescentIcon /> : <SunIcon />}
+        label={siteStore.theme === "light" ? "Dark" : "Light"}
         onClick={() =>
           siteStore.setTheme(siteStore.theme === "light" ? "dark" : "light")
         }

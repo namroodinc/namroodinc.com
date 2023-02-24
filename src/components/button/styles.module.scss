@@ -2,36 +2,62 @@
 @import "../../global";
 
 .button {
+  align-items: center;
   background-color: var(--bg-color);
   border: 1px solid var(--border-color);
   color: var(--text-color);
   cursor: pointer;
   font-family: inherit;
+  gap: $increment;
+  justify-content: center;
   user-select: none;
+
+  // fill svg with current text colour
+  svg {
+    fill: currentColor;
+    g {
+      fill: currentColor;
+    }
+  }
 
   &.small {
     font-size: 0.8em;
     min-height: calc($increment * 6);
     padding: $md;
+
+    svg {
+      height: 0.8em;
+      width: 0.8em;
+    }
   }
   &.medium {
     font-size: 0.875em;
     min-height: calc($increment * 8);
     padding: $lg;
+
+    svg {
+      height: 16px;
+      width: 16px;
+    }
   }
   &.large {
     font-size: 1.2em;
     min-height: calc($increment * 10);
     padding: $xl;
+
+    svg {
+      height: 1.2em;
+      width: 1.2em;
+    }
   }
 
   &.fullWidth {
     box-sizing: border-box;
-    display: block;
+    display: flex;
     width: 100%;
   }
   &.inline {
-    display: inline-block;
+    display: inline-flex;
   }
 
   &:hover {

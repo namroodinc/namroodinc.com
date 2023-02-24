@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 import styles from "./styles.module.scss";
 
-const Button = ({ fullWidth, label, onClick, size }) => {
+const Button = ({ fullWidth, icon, label, onClick, size }) => {
   return (
     <button
       className={`${styles.button} ${styles[size]} ${
@@ -12,14 +12,16 @@ const Button = ({ fullWidth, label, onClick, size }) => {
     `}
       onClick={onClick}
     >
-      {label}
+      {icon && icon}
+      {label && label}
     </button>
   );
 };
 
 Button.propTypes = {
   fullWidth: PropTypes.bool,
-  label: PropTypes.string.isRequired,
+  icon: PropTypes.element,
+  label: PropTypes.string,
   onClick: PropTypes.func.isRequired,
   size: PropTypes.oneOf(["small", "medium", "large"])
 };

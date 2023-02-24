@@ -1,5 +1,10 @@
 .header {
-  border-bottom: 2px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
   display: flex;
   justify-content: space-between;
+
+  button {
+    border-bottom: 0 none transparent;
+    border-top: 0 none transparent;
+  }
 }
