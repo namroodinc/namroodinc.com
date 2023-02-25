@@ -57,7 +57,8 @@ export class BlogPostStore {
       createdAt: data.sys.createdAt,
       body: data.fields.blogPostBody,
       mainImageId: data.fields.mainImage.sys.id,
-      description: data.fields.description
+      description: data.fields.description,
+      tags: data.metadata.tags
     };
   };
 

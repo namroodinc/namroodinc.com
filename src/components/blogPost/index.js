@@ -4,8 +4,9 @@ import { BLOCKS } from "@contentful/rich-text-types";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 
 import { useStore } from "../../stores";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Asset from "../asset";
+import Columns from "../columns";
 
 const BlogPost = observer(() => {
   const blogPostStore = useStore("blogPostStore");
@@ -36,9 +37,20 @@ const BlogPost = observer(() => {
 
   return (
     <div className="BlogPost">
-      <Asset imageId={blogPost.mainImageId} />
-      <h1>{blogPost.headline}</h1>
-      {documentToReactComponents(blogPost.body, options)}
+      <Columns numberOfColumns={1}>
+        <Asset imageId={blogPost.mainImageId} />
+        <h1>{blogPost.headline}</h1>
+        {documentToReactComponents(blogPost.body, options)}
+        <div>
+          {blogPost.tags.map((tag) => {
+            return (
+              <Link key={tag.sys.id} to={`/posts/${tag.sys.id}`}>
+                {tag.sys.id}
+              </Link>
+            );
+          })}
+        </div>
+      </Columns>
     </div>
   );
 });
