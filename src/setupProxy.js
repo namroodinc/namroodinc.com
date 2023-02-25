@@ -14,16 +14,20 @@ module.exports = function (app) {
       .catch(console.error);
   });
 
-  app.get("/api/contentful/blogPostList", (req, res) => {
-    client
-      .getEntries({
-        content_type: "blogPost",
-        skip: req.query.skip,
-        limit: req.query.limit
-      })
-      .then((response) => res.json(response))
-      .catch(console.error);
-  });
+  app.get(
+    "/api/contentful/blogPostList/:skip/:limit/:sortOrder",
+    (req, res) => {
+      client
+        .getEntries({
+          content_type: "blogPost",
+          skip: req.params.skip,
+          limit: req.params.limit,
+          order: req.params.sortOrder // "-sys.createdAt"
+        })
+        .then((response) => res.json(response))
+        .catch(console.error);
+    }
+  );
 
   app.get("/api/contentful/blogPost/:blogPostId", (req, res) => {
     client

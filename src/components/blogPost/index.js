@@ -2,11 +2,14 @@ import React, { useEffect } from "react";
 import { observer } from "mobx-react-lite";
 import { BLOCKS } from "@contentful/rich-text-types";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
+import { useParams } from "react-router-dom";
 
 import { useStore } from "../../stores";
-import { Link, useParams } from "react-router-dom";
 import Asset from "../asset";
 import Columns from "../columns";
+import Button from "../button";
+
+import styles from "./styles.module.scss";
 
 const BlogPost = observer(() => {
   const blogPostStore = useStore("blogPostStore");
@@ -36,17 +39,21 @@ const BlogPost = observer(() => {
   }
 
   return (
-    <div className="BlogPost">
+    <div className={styles.blogPost}>
       <Columns numberOfColumns={1}>
         <Asset imageId={blogPost.mainImageId} />
         <h1>{blogPost.headline}</h1>
         {documentToReactComponents(blogPost.body, options)}
-        <div>
+        <div className={styles.tags}>
           {blogPost.tags.map((tag) => {
             return (
-              <Link key={tag.id} to={`/posts/${tag.id}`}>
-                {tag.name}
-              </Link>
+              <Button
+                buttonType="link"
+                key={tag.id}
+                label={tag.name}
+                size="small"
+                to={`/posts/${tag.id}`}
+              />
             );
           })}
         </div>

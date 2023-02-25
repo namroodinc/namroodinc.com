@@ -6,6 +6,7 @@ export class BlogPostStore {
   skip = 0;
   limit = 3; //12;
   showMore = true;
+  sortOrder = "-sys.createdAt";
   tags = [];
 
   constructor() {
@@ -19,6 +20,7 @@ export class BlogPostStore {
       fetchBlogPost: action,
       fetchTags: action,
       setBlogPostAsNull: action,
+      sortOrder: observable,
       tags: observable
     });
 
@@ -40,7 +42,7 @@ export class BlogPostStore {
   };
 
   fetchBlogPostList = async () => {
-    const url = `/api/contentful/blogPostList?skip=${this.skip}&limit=${this.limit}`;
+    const url = `/api/contentful/blogPostList/${this.skip}/${this.limit}/${this.sortOrder}`;
     const response = await fetch(url);
     const data = await response.json();
 

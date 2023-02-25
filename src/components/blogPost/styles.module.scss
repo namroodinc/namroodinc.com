@@ -1,0 +1,12 @@
+@import "../../global";
+
+.blogPost {
+  margin: auto;
+  width: 100%;
+  max-width: $contentMaxWidth;
+}
+
+.tags {
+  display: flex;
+  gap: $md;
+}

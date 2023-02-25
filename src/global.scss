@@ -8,6 +8,8 @@ $xl: calc($increment * 6);
 
 $transition: 0.15s ease-in-out;
 
+$contentMaxWidth: 768px;
+
 @mixin xs {
   @media (max-width: 575px) {
     @content;
@@ -21,7 +23,7 @@ $transition: 0.15s ease-in-out;
 }
 
 @mixin md {
-  @media (min-width: 768px) and (max-width: 991px) {
+  @media (min-width: $contentMaxWidth) and (max-width: 991px) {
     @content;
   }
 }
