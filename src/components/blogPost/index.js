@@ -44,8 +44,8 @@ const BlogPost = observer(() => {
         <div>
           {blogPost.tags.map((tag) => {
             return (
-              <Link key={tag.sys.id} to={`/posts/${tag.sys.id}`}>
-                {tag.sys.id}
+              <Link key={tag.id} to={`/posts/${tag.id}`}>
+                {tag.name}
               </Link>
             );
           })}

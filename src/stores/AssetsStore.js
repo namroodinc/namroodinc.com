@@ -13,7 +13,7 @@ export class AssetsStore {
   }
 
   fetchAssets = async () => {
-    const url = `/assets`;
+    const url = `/api/contentful/assets`;
     const response = await fetch(url);
     const data = await response.json();
 

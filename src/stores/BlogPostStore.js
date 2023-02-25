@@ -6,6 +6,7 @@ export class BlogPostStore {
   skip = 0;
   limit = 3; //12;
   showMore = true;
+  tags = [];
 
   constructor() {
     makeObservable(this, {
@@ -16,14 +17,30 @@ export class BlogPostStore {
       showMore: observable,
       fetchBlogPostList: action,
       fetchBlogPost: action,
-      setBlogPostAsNull: action
+      fetchTags: action,
+      setBlogPostAsNull: action,
+      tags: observable
     });
 
     this.fetchBlogPostList();
+    this.fetchTags();
   }
 
+  fetchTags = async (tags) => {
+    const url = `/api/contentful/tags`;
+    const response = await fetch(url);
+    const data = await response.json();
+
+    this.tags = data.map((item) => {
+      return {
+        id: item.sys.id,
+        name: item.name
+      };
+    });
+  };
+
   fetchBlogPostList = async () => {
-    const url = `/entries?skip=${this.skip}&limit=${this.limit}`;
+    const url = `/api/contentful/blogPostList?skip=${this.skip}&limit=${this.limit}`;
     const response = await fetch(url);
     const data = await response.json();
 
@@ -47,7 +64,7 @@ export class BlogPostStore {
   };
 
   fetchBlogPost = async (id) => {
-    const url = `/entries/${id}`;
+    const url = `/api/contentful/blogPost/${id}`;
     const response = await fetch(url);
     const data = await response.json();
 
@@ -58,7 +75,9 @@ export class BlogPostStore {
       body: data.fields.blogPostBody,
       mainImageId: data.fields.mainImage.sys.id,
       description: data.fields.description,
-      tags: data.metadata.tags
+      tags: data.metadata.tags.map((tag) => {
+        return this.tags.find((item) => item.id === tag.sys.id);
+      })
     };
   };
 
