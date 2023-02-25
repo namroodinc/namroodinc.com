@@ -26,12 +26,7 @@ const Card = ({ description, headline, id, image, showReadMore }) => {
       )}
       {showReadMore && (
         <div className={styles.cardFooter}>
-          <Button
-            buttonType="link"
-            fullWidth
-            label="Read More"
-            to={`/post/${id}`}
-          />
+          <Button buttonType="link" label="Read More" to={`/post/${id}`} />
         </div>
       )}
     </div>

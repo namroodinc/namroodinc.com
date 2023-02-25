@@ -4,7 +4,7 @@
   justify-content: space-between;
 
   button {
-    border-bottom: 0 none transparent;
-    border-top: 0 none transparent;
+    border: 0 none transparent;
+    border-left: 1px solid var(--border-color);
   }
 }

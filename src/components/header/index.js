@@ -20,7 +20,7 @@ const Header = observer(() => {
 
       <Button
         icon={siteStore.theme === "light" ? <CrescentIcon /> : <SunIcon />}
-        label={siteStore.theme === "light" ? "Dark" : "Light"}
+        label={siteStore.theme === "light" ? "Dark mode" : "Light mode"}
         onClick={() =>
           siteStore.setTheme(siteStore.theme === "light" ? "dark" : "light")
         }

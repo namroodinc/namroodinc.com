@@ -7,7 +7,14 @@ import styles from "./styles.module.scss";
 const Button = ({ buttonType, fullWidth, icon, label, onClick, size, to }) => {
   if (buttonType === "link") {
     return (
-      <Link className={`${styles.button} ${styles[size]}`} to={to}>
+      <Link
+        className={`${styles.button} ${styles[size]} ${
+          styles[fullWidth ? "fullWidth" : "inline"]
+        }
+      `}
+        data-button-type={buttonType}
+        to={to}
+      >
         {icon && icon}
         {label && label}
       </Link>
@@ -20,6 +27,7 @@ const Button = ({ buttonType, fullWidth, icon, label, onClick, size, to }) => {
         styles[fullWidth ? "fullWidth" : "inline"]
       }
     `}
+      data-button={buttonType}
       onClick={onClick}
     >
       {icon && icon}

@@ -23,7 +23,6 @@
 
   &.small {
     font-size: 0.8em;
-    min-height: calc($increment * 6);
     padding: $md;
 
     svg {
@@ -33,7 +32,6 @@
   }
   &.medium {
     font-size: 0.875em;
-    min-height: calc($increment * 8);
     padding: $lg;
 
     svg {
@@ -43,7 +41,6 @@
   }
   &.large {
     font-size: 1.2em;
-    min-height: calc($increment * 10);
     padding: $xl;
 
     svg {
