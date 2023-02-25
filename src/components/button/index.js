@@ -4,7 +4,39 @@ import { Link } from "react-router-dom";
 
 import styles from "./styles.module.scss";
 
-const Button = ({ buttonType, fullWidth, icon, label, onClick, size, to }) => {
+const Button = ({
+  buttonType,
+  fullWidth,
+  icon,
+  label,
+  onClick,
+  size,
+  to,
+  ...other
+}) => {
+  const content = (
+    <>
+      {icon && icon}
+      {label && label}
+    </>
+  );
+
+  if (buttonType === "anchor") {
+    return (
+      <a
+        className={`${styles.button} ${styles[size]} ${
+          styles[fullWidth ? "fullWidth" : "inline"]
+        }
+      `}
+        data-button-type={buttonType}
+        href={to}
+        {...other}
+      >
+        {content}
+      </a>
+    );
+  }
+
   if (buttonType === "link") {
     return (
       <Link
@@ -14,9 +46,9 @@ const Button = ({ buttonType, fullWidth, icon, label, onClick, size, to }) => {
       `}
         data-button-type={buttonType}
         to={to}
+        {...other}
       >
-        {icon && icon}
-        {label && label}
+        {content}
       </Link>
     );
   }
@@ -29,15 +61,15 @@ const Button = ({ buttonType, fullWidth, icon, label, onClick, size, to }) => {
     `}
       data-button={buttonType}
       onClick={onClick}
+      {...other}
     >
-      {icon && icon}
-      {label && label}
+      {content}
     </button>
   );
 };
 
 Button.propTypes = {
-  buttonType: PropTypes.oneOf(["button", "link"]),
+  buttonType: PropTypes.oneOf(["anchor", "button", "link"]),
   fullWidth: PropTypes.bool,
   icon: PropTypes.element,
   label: PropTypes.string,

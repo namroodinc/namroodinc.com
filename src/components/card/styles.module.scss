@@ -1,6 +1,9 @@
 @import "../../global";
 
 .card {
+  &Description {
+    color: var(--secondary-text-color);
+  }
   &Image {
     img {
       height: auto;

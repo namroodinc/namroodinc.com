@@ -3,33 +3,46 @@ import { observer } from "mobx-react-lite";
 import { useStore } from "../../stores";
 
 import styles from "./styles.module.scss";
+import Button from "../button";
 
 const Footer = observer(() => {
   const siteStore = useStore("siteStore");
 
   return (
     <footer className={styles.footer}>
-      <p className="footer__text">{siteStore.siteName}</p>
-      <ul>
-        <li>
-          <a href={`${siteStore.linkedIn}`} target="_blank" rel="noreferrer">
-            LinkedIn
-          </a>
-        </li>
-        <li>
-          <a href={`${siteStore.github}`} target="_blank" rel="noreferrer">
-            GitHub
-          </a>
-        </li>
-        <li>
-          <a href={`${siteStore.twitter}`} target="_blank" rel="noreferrer">
-            Twitter
-          </a>
-        </li>
-        <li>
-          <a href={`mailto:${siteStore.email}`}>Email</a>
-        </li>
-      </ul>
+      <div className={styles.socials}>
+        <h6>Socials</h6>
+        <Button
+          buttonType="anchor"
+          to={`${siteStore.linkedIn}`}
+          label="LinkedIn"
+          size="small"
+          target="_blank"
+          rel="noreferrer"
+        />
+        <Button
+          buttonType="anchor"
+          to={`${siteStore.github}`}
+          label="GitHub"
+          size="small"
+          target="_blank"
+          rel="noreferrer"
+        />
+        <Button
+          buttonType="anchor"
+          to={`${siteStore.twitter}`}
+          label="Twitter"
+          size="small"
+          target="_blank"
+          rel="noreferrer"
+        />
+        <Button
+          buttonType="anchor"
+          to={`mailto:${siteStore.email}`}
+          label="Email"
+          size="small"
+        />
+      </div>
     </footer>
   );
 });

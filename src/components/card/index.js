@@ -23,7 +23,7 @@ const Card = ({ description, headline, id, image, showReadMore }) => {
           </div>
         )}
         {description && (
-          <div className={styles.cardDescription}>{description}</div>
+          <span className={styles.cardDescription}>{description}</span>
         )}
         {showReadMore && (
           <div className={styles.cardFooter}>
