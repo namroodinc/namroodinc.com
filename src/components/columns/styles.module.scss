@@ -7,6 +7,16 @@
   @for $i from 1 through 6 {
     &[data-number-of-columns="#{$i}"] {
       grid-template-columns: repeat($i, 1fr);
+
+      @if $i > 2 {
+        @include sm {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        @include xs {
+          grid-template-columns: repeat(1, 1fr);
+        }
+      }
     }
   }
 
