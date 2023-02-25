@@ -3,11 +3,30 @@
 .columns {
   display: grid;
   grid-template-rows: auto;
-  gap: $xl;
 
   @for $i from 1 through 6 {
     &[data-number-of-columns="#{$i}"] {
       grid-template-columns: repeat($i, 1fr);
     }
+  }
+
+  &[data-gap="xs"] {
+    gap: $xs;
+  }
+
+  &[data-gap="sm"] {
+    gap: $sm;
+  }
+
+  &[data-gap="md"] {
+    gap: $md;
+  }
+
+  &[data-gap="lg"] {
+    gap: $lg;
+  }
+
+  &[data-gap="xl"] {
+    gap: $xl;
   }
 }

@@ -1,11 +1,6 @@
 @import "../../global";
 
 .card {
-  border-radius: 4px;
-  display: grid;
-  gap: $lg;
-  justify-content: space-between;
-
   &Image {
     img {
       height: auto;

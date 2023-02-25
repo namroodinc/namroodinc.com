@@ -4,12 +4,12 @@ import PropTypes from "prop-types";
 import styles from "./styles.module.scss";
 import { Link } from "react-router-dom";
 import Button from "../button";
+import Columns from "../columns";
 
-// create card component which has a title, image, content and footer
 const Card = ({ description, headline, id, image, showReadMore }) => {
   return (
-    <div className={styles.cardWrapper}>
-      <div className={styles.card}>
+    <div className={styles.card}>
+      <Columns numberOfColumns={1} gap="lg">
         {image && (
           <div className={styles.cardImage}>
             <Link to={`/post/${id}`}>{image}</Link>
@@ -30,7 +30,7 @@ const Card = ({ description, headline, id, image, showReadMore }) => {
             <Button buttonType="link" label="Read More" to={`/post/${id}`} />
           </div>
         )}
-      </div>
+      </Columns>
     </div>
   );
 };

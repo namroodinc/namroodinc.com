@@ -7,6 +7,7 @@ const Columns = (props) => {
   return (
     <div
       className={styles.columns}
+      data-gap={props.gap}
       data-number-of-columns={props.numberOfColumns}
     >
       {props.children}
@@ -16,11 +17,13 @@ const Columns = (props) => {
 
 Columns.propTypes = {
   children: PropTypes.node,
-  numberOfColumns: PropTypes.number
+  gap: PropTypes.oneOf(["xs", "sm", "md", "lg", "xl"]),
+  numberOfColumns: PropTypes.oneOf([1, 2, 3, 4, 5, 6])
 };
 
 Columns.defaultProps = {
   children: null,
+  gap: "xl",
   numberOfColumns: 3
 };
 
