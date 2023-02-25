@@ -54,10 +54,18 @@ export class BlogPostStore {
     this.blogPostList = [
       ...this.blogPostList,
       ...data.items.map((item) => {
+        const formattedDate = new Date(item.sys.createdAt).toLocaleDateString(
+          "en-GB",
+          {
+            year: "numeric",
+            month: "long",
+            day: "numeric"
+          }
+        );
         return {
           id: item.sys.id,
           headline: item.fields.headline,
-          createdAt: item.sys.createdAt,
+          createdAt: formattedDate,
           mainImageId: item.fields.mainImage.sys.id,
           description: item.fields.description
         };
@@ -70,10 +78,19 @@ export class BlogPostStore {
     const response = await fetch(url);
     const data = await response.json();
 
+    const formattedDate = new Date(data.sys.createdAt).toLocaleDateString(
+      "en-GB",
+      {
+        year: "numeric",
+        month: "long",
+        day: "numeric"
+      }
+    );
+
     this.blogPost = {
       id: data.sys.id,
       headline: data.fields.headline,
-      createdAt: data.sys.createdAt,
+      createdAt: formattedDate,
       body: data.fields.blogPostBody,
       mainImageId: data.fields.mainImage.sys.id,
       description: data.fields.description,

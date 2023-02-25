@@ -1,7 +1,28 @@
+@import "../../global";
+
 .header {
+  align-items: center;
+  background-color: var(--bg-color);
   border-bottom: 1px solid var(--border-color);
   display: flex;
   justify-content: space-between;
+  padding-left: $lg;
+  position: sticky;
+  top: 0;
+
+  .logo {
+    color: var(--text-color);
+    width: calc($increment * 45);
+
+    svg {
+      fill: currentColor;
+      height: auto;
+      width: 100%;
+      g {
+        fill: currentColor;
+      }
+    }
+  }
 
   button {
     border: 0 none transparent;

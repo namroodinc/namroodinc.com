@@ -6,7 +6,14 @@ import { Link } from "react-router-dom";
 import Button from "../button";
 import Columns from "../columns";
 
-const Card = ({ description, headline, id, image, showReadMore }) => {
+const Card = ({
+  createdAt,
+  description,
+  headline,
+  id,
+  image,
+  showReadMore
+}) => {
   return (
     <div className={styles.card}>
       <Columns numberOfColumns={1} gap="lg">
@@ -22,9 +29,15 @@ const Card = ({ description, headline, id, image, showReadMore }) => {
             </h3>
           </div>
         )}
-        {description && (
-          <span className={styles.cardDescription}>{description}</span>
-        )}
+        <span className={styles.cardDescription}>
+          {createdAt}
+          {description && (
+            <>
+              <br />
+              {description}
+            </>
+          )}
+        </span>
         {showReadMore && (
           <div className={styles.cardFooter}>
             <Button buttonType="link" label="Read More" to={`/post/${id}`} />

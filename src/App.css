@@ -42,8 +42,11 @@ h6 {
     text-transform: uppercase;
 }
 
-
 h1 a, h2 a , h3 a, h4 , h5, h6 {
     color: inherit;
     text-decoration: none;
+}
+
+img, svg {
+    display: block;
 }

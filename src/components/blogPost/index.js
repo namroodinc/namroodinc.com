@@ -41,22 +41,26 @@ const BlogPost = observer(() => {
   return (
     <div className={styles.blogPost}>
       <Columns numberOfColumns={1}>
-        <Asset imageId={blogPost.mainImageId} />
         <h1>{blogPost.headline}</h1>
+        <span className={styles.blogPostDateTime}>{blogPost.createdAt}</span>
+        <Asset imageId={blogPost.mainImageId} />
         {documentToReactComponents(blogPost.body, options)}
-        <div className={styles.tags}>
-          {blogPost.tags.map((tag) => {
-            return (
-              <Button
-                buttonType="link"
-                key={tag.id}
-                label={tag.name}
-                size="small"
-                to={`/posts/${tag.id}`}
-              />
-            );
-          })}
-        </div>
+        {blogPost.tags.length > 0 && (
+          <div className={styles.tags}>
+            <h6>Tags</h6>
+            {blogPost.tags.map((tag) => {
+              return (
+                <Button
+                  buttonType="link"
+                  key={tag.id}
+                  label={tag.name}
+                  size="small"
+                  to={`/posts/${tag.id}`}
+                />
+              );
+            })}
+          </div>
+        )}
       </Columns>
     </div>
   );
