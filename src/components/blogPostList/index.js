@@ -4,21 +4,24 @@ import { useStore } from "../../stores";
 import Asset from "../asset";
 import Card from "../card";
 import Button from "../button";
+import Columns from "../columns";
 
 const BlogPostList = observer(() => {
   const blogPostStore = useStore("blogPostStore");
 
   return (
-    <div className="blog-post-list">
-      {blogPostStore.blogPostList.map((post) => {
-        return (
-          <Card
-            key={post.id}
-            image={<Asset imageId={post.mainImageId} />}
-            {...post}
-          />
-        );
-      })}
+    <Columns numberOfColumns={1}>
+      <Columns>
+        {blogPostStore.blogPostList.map((post) => {
+          return (
+            <Card
+              key={post.id}
+              image={<Asset imageId={post.mainImageId} />}
+              {...post}
+            />
+          );
+        })}
+      </Columns>
       {blogPostStore.showMore && (
         <Button
           fullWidth
@@ -26,7 +29,7 @@ const BlogPostList = observer(() => {
           onClick={blogPostStore.fetchBlogPostList}
         />
       )}
-    </div>
+    </Columns>
   );
 });
 

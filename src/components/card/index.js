@@ -8,27 +8,29 @@ import Button from "../button";
 // create card component which has a title, image, content and footer
 const Card = ({ description, headline, id, image, showReadMore }) => {
   return (
-    <div className={styles.card}>
-      {image && (
-        <div className={styles.cardImage}>
-          <Link to={`/post/${id}`}>{image}</Link>
-        </div>
-      )}
-      {headline && (
-        <div className={styles.cardHeadline}>
-          <h3>
-            <Link to={`/post/${id}`}>{headline}</Link>
-          </h3>
-        </div>
-      )}
-      {description && (
-        <div className={styles.cardDescription}>{description}</div>
-      )}
-      {showReadMore && (
-        <div className={styles.cardFooter}>
-          <Button buttonType="link" label="Read More" to={`/post/${id}`} />
-        </div>
-      )}
+    <div className={styles.cardWrapper}>
+      <div className={styles.card}>
+        {image && (
+          <div className={styles.cardImage}>
+            <Link to={`/post/${id}`}>{image}</Link>
+          </div>
+        )}
+        {headline && (
+          <div className={styles.cardHeadline}>
+            <h3>
+              <Link to={`/post/${id}`}>{headline}</Link>
+            </h3>
+          </div>
+        )}
+        {description && (
+          <div className={styles.cardDescription}>{description}</div>
+        )}
+        {showReadMore && (
+          <div className={styles.cardFooter}>
+            <Button buttonType="link" label="Read More" to={`/post/${id}`} />
+          </div>
+        )}
+      </div>
     </div>
   );
 };
