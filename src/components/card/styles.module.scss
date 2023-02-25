@@ -1,8 +1,11 @@
+// include global scss
+@import "../../global";
+
 .card {
-  border: 1px solid var(--border-color);
   border-bottom: 1px solid var(--border-color);
   border-radius: 4px;
-  display: flex;
+  display: grid;
+  gap: $lg;
   justify-content: space-between;
 
   &Image {

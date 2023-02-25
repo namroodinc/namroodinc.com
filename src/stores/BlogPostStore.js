@@ -39,7 +39,8 @@ export class BlogPostStore {
           id: item.sys.id,
           headline: item.fields.headline,
           createdAt: item.sys.createdAt,
-          mainImageId: item.fields.mainImage.sys.id
+          mainImageId: item.fields.mainImage.sys.id,
+          description: item.fields.description
         };
       })
     ];
@@ -55,7 +56,8 @@ export class BlogPostStore {
       headline: data.fields.headline,
       createdAt: data.sys.createdAt,
       body: data.fields.blogPostBody,
-      mainImageId: data.fields.mainImage.sys.id
+      mainImageId: data.fields.mainImage.sys.id,
+      description: data.fields.description
     };
   };
 

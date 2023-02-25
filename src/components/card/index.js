@@ -2,29 +2,56 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import styles from "./styles.module.scss";
+import { Link } from "react-router-dom";
+import Button from "../button";
 
 // create card component which has a title, image, content and footer
-const Card = ({ title, image, content, footer }) => {
+const Card = ({ description, headline, id, image, showReadMore }) => {
   return (
     <div className={styles.card}>
-      <div className="card__header">
-        <h3 className="card__title">{title}</h3>
-      </div>
-      <div className={styles.cardImage}>{image}</div>
-      <div>
-        <p className="card__text">{content}</p>
-      </div>
-      <div className="card__footer">{footer}</div>
+      {image && (
+        <div className={styles.cardImage}>
+          <Link to={`/post/${id}`}>{image}</Link>
+        </div>
+      )}
+      {headline && (
+        <div className={styles.cardHeadline}>
+          <h3>
+            <Link to={`/post/${id}`}>{headline}</Link>
+          </h3>
+        </div>
+      )}
+      {description && (
+        <div className={styles.cardDescription}>{description}</div>
+      )}
+      {showReadMore && (
+        <div className={styles.cardFooter}>
+          <Button
+            buttonType="link"
+            fullWidth
+            label="Read More"
+            to={`/post/${id}`}
+          />
+        </div>
+      )}
     </div>
   );
 };
 
-// set prop types
 Card.propTypes = {
-  title: PropTypes.string.isRequired,
+  description: PropTypes.string,
+  title: PropTypes.string,
+  id: PropTypes.string,
   image: PropTypes.element,
   content: PropTypes.element,
-  footer: PropTypes.element.isRequired
+  showReadMore: PropTypes.bool
+};
+
+Card.defaultProps = {
+  description: null,
+  image: null,
+  content: null,
+  showReadMore: true
 };
 
 export default Card;
