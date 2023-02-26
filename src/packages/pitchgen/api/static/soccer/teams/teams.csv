@@ -1,4 +1,4 @@
-shortName,fullName,stadium,stadiumCapacity,founded,cityBasedIn,countryBasedIn,brandColor
+teamId,fullName,stadium,stadiumCapacity,founded,cityBasedIn,countryBasedIn,brandColor
 CHE,Chelsea FC,Stamford Bridge,40853,1905,London,England,#034694
 MUFC,Manchester United FC,Old Trafford,74879,1878,Manchester,England,#E20E0E
 FCB,FC Barcelona,Camp Nou,99354,1899,Barcelona,Spain,#A50044

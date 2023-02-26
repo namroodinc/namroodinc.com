@@ -1,4 +1,4 @@
-shortName,fullName,stadium,stadiumCapacity,founded,cityBasedIn,countryBasedIn,brandColor
+teamId,fullName,stadium,stadiumCapacity,founded,cityBasedIn,countryBasedIn,brandColor
 CHI,Chicago Bulls,United Center,20917,1966,Chicago,USA,#ce1141
 LAL,Los Angeles Lakers,Staples Center,18997,1947,Los Angeles,USA,#552583
 MIA,Miami Heat,AmericanAirlines Arena,19600,1988,Miami,USA,#98002e

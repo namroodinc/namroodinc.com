@@ -103,7 +103,7 @@ export class BlogPostStore {
   };
 
   fetchTeams = async () => {
-    const url = `/api/static/basketball/teams`;
+    const url = `/api/static/basketball/team/CHI`;
     const response = await fetch(url);
     const data = await response.json();
     console.log(data);

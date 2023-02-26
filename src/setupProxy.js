@@ -3,6 +3,13 @@ const Papa = require("papaparse");
 const fs = require("fs");
 const path = require("path");
 
+const papaParseOptions = {
+  delimiter: ",",
+  dynamicTyping: true,
+  header: true,
+  transformHeader: (h) => h.trim()
+};
+
 module.exports = function (app) {
   const client = contentful.createClient({
     accessToken: process.env.REACT_APP_CONTENTFUL_ACCESS_TOKEN,
@@ -48,7 +55,7 @@ module.exports = function (app) {
 
   app.get("/api/static/:sport/teams/:sortOrder", (req, res) => {
     const { sport } = req.params;
-    const { skip, limit, sortOrder } = req.query;
+    const { sortOrder } = req.query;
 
     const data = fs.readFileSync(
       path.join(
@@ -58,10 +65,7 @@ module.exports = function (app) {
       "utf8"
     );
 
-    const parsedData = Papa.parse(data, {
-      header: true,
-      skipEmptyLines: true
-    });
+    const parsedData = Papa.parse(data, papaParseOptions);
 
     const { data: teamsData } = parsedData;
 
@@ -73,10 +77,38 @@ module.exports = function (app) {
       }
     });
 
-    const slicedTeamsData = sortedTeamsData.slice(skip, limit);
+    res.json(sortedTeamsData);
+  });
 
-    console.log(slicedTeamsData);
+  app.get("/api/static/:sport/team/:teamId", (req, res) => {
+    const { sport, teamId } = req.params;
 
-    res.json(slicedTeamsData);
+    const data = fs.readFileSync(
+      path.join(
+        __dirname,
+        `./packages/pitchgen/api/static/${sport}/teams/teams.csv`
+      ),
+      "utf8"
+    );
+
+    const parsedTeamsData = Papa.parse(data, papaParseOptions);
+
+    const { data: teamsData } = parsedTeamsData;
+
+    const team = teamsData.find((team) => team.teamId === teamId);
+
+    const playersData = fs.readFileSync(
+      path.join(
+        __dirname,
+        `./packages/pitchgen/api/static/${sport}/team/${teamId}.csv`
+      ),
+      "utf8"
+    );
+
+    const parsedPlayersData = Papa.parse(playersData, papaParseOptions);
+
+    const { data: players } = parsedPlayersData;
+
+    res.json({ ...team, players });
   });
 };
