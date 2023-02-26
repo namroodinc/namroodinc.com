@@ -1,6 +1,5 @@
 import React from "react";
 import { chelsea, manchesterUnited } from "./data";
-// import { flagsWithClass } from "../places";
 
 import { BasketballCourt, SoccerPitch } from "./PlayingArea"; //
 

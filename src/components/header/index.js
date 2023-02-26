@@ -18,8 +18,10 @@ const Header = observer(() => {
       <Link className={styles.logo} to="/">
         <NamroodIncIcon />
       </Link>
-      <Link to="/about">About me</Link>
-
+      <div>
+        <Link to="/about">About me</Link>
+        <Link to="/packages/pitchgen">PitchGen</Link>
+      </div>
       <Button
         icon={siteStore.theme === "light" ? <CrescentIcon /> : <SunIcon />}
         label={siteStore.theme === "light" ? "Dark mode" : "Light mode"}

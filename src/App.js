@@ -6,6 +6,7 @@ import Page from "./components/page";
 import { StoresProvider, stores } from "./stores";
 
 import "./App.css";
+import PitchGen from "./packages/pitchgen";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
               element={<Page id="35UdcXAsSsugQUqQ2oY0Ym" />}
             />
             <Route path="post/:id" element={<BlogPost />} />
+            <Route path="packages/pitchgen" element={<PitchGen />} />
           </Route>
         </Routes>
       </StoresProvider>
