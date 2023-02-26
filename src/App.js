@@ -4,9 +4,11 @@ import Home from "./components/home";
 import Layout from "./components/layout";
 import Page from "./components/page";
 import { StoresProvider, stores } from "./stores";
+import PitchGen from "./packages/pitchgen";
+import PitchGenLayout from "./packages/pitchgen/layout";
+import Sport from "./packages/pitchgen/sport";
 
 import "./App.css";
-import PitchGen from "./packages/pitchgen";
 
 function App() {
   return (
@@ -20,7 +22,10 @@ function App() {
               element={<Page id="35UdcXAsSsugQUqQ2oY0Ym" />}
             />
             <Route path="post/:id" element={<BlogPost />} />
-            <Route path="packages/pitchgen" element={<PitchGen />} />
+            <Route path="packages/pitchgen" element={<PitchGenLayout />}>
+              <Route index element={<PitchGen />} />
+              <Route path=":sport" element={<Sport />} />
+            </Route>
           </Route>
         </Routes>
       </StoresProvider>

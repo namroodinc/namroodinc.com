@@ -30,7 +30,7 @@ const BlogPost = observer(() => {
 
   useEffect(() => {
     return () => {
-      blogPostStore.setBlogPostAsNull();
+      blogPostStore.resetBlogPost();
     };
   }, [blogPostStore]);
 

@@ -15,12 +15,16 @@ const Header = observer(() => {
 
   return (
     <header className={styles.header}>
-      <Link className={styles.logo} to="/">
-        <NamroodIncIcon />
-      </Link>
-      <div>
-        <Link to="/about">About me</Link>
-        <Link to="/packages/pitchgen">PitchGen</Link>
+      <div className={styles.headerNav}>
+        <Link className={styles.logo} to="/">
+          <NamroodIncIcon />
+        </Link>
+        <Link className={styles.headerNavLink} to="/about">
+          About me
+        </Link>
+        <Link className={styles.headerNavLink} to="/packages/pitchgen">
+          PitchGen
+        </Link>
       </div>
       <Button
         icon={siteStore.theme === "light" ? <CrescentIcon /> : <SunIcon />}

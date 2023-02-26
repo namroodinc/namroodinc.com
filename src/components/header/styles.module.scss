@@ -24,6 +24,18 @@
     }
   }
 
+  &Nav {
+    align-items: center;
+    display: flex;
+    gap: $lg;
+
+    &Link {
+      color: inherit;
+      font-size: 0.875em;
+      text-transform: uppercase;
+    }
+  }
+
   button {
     border: 0 none transparent;
     border-left: 1px solid var(--border-color);

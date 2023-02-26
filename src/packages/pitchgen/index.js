@@ -1,6 +1,6 @@
 import React from "react";
 
-import { BasketballCourt, SoccerPitch } from "./PlayingArea"; //
+import { BasketballCourt, SoccerPitch } from "./PlayingArea";
 
 export default function PitchGen() {
   return (

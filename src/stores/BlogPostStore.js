@@ -19,15 +19,13 @@ export class BlogPostStore {
       fetchBlogPostList: action,
       fetchBlogPost: action,
       fetchTags: action,
-      fetchTeams: action,
-      setBlogPostAsNull: action,
+      resetBlogPost: action,
       sortOrder: observable,
       tags: observable
     });
 
     this.fetchBlogPostList();
     this.fetchTags();
-    this.fetchTeams();
   }
 
   fetchTags = async (tags) => {
@@ -102,15 +100,7 @@ export class BlogPostStore {
     };
   };
 
-  fetchTeams = async () => {
-    const url = `/api/static/basketball/team/CHI`;
-    const response = await fetch(url);
-    const data = await response.json();
-    console.log(data);
-    // this.teams = data;
-  };
-
-  setBlogPostAsNull = () => {
+  resetBlogPost = () => {
     this.blogPost = null;
   };
 }
