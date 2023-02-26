@@ -1,5 +1,4 @@
 import React from "react";
-import { chelsea, manchesterUnited } from "./data";
 
 import { BasketballCourt, SoccerPitch } from "./PlayingArea"; //
 
@@ -9,28 +8,10 @@ export default function PitchGen() {
       {" "}
       <>
         <h2>Soccer</h2>
-        <SoccerPitch
-          fillColor="#252525"
-          strokeColor="#fbfbfb"
-          teams={[chelsea, manchesterUnited]}
-        />
-        <SoccerPitch
-          width={360}
-          height={240}
-          isHorizontal={false}
-          teams={[chelsea]}
-        />
-        <SoccerPitch
-          fillColor="#252525"
-          strokeColor="#fbfbfb"
-          teams={[manchesterUnited]}
-        />
-        <SoccerPitch
-          width={360}
-          height={240}
-          isHorizontal={false}
-          teams={[chelsea, manchesterUnited]}
-        />
+        <SoccerPitch fillColor="#252525" strokeColor="#fbfbfb" teams={[]} />
+        <SoccerPitch width={360} height={240} isHorizontal={false} teams={[]} />
+        <SoccerPitch fillColor="#252525" strokeColor="#fbfbfb" teams={[]} />
+        <SoccerPitch width={360} height={240} isHorizontal={false} teams={[]} />
       </>{" "}
       <>
         <h2>Basketball</h2>

@@ -19,6 +19,7 @@ export class BlogPostStore {
       fetchBlogPostList: action,
       fetchBlogPost: action,
       fetchTags: action,
+      fetchTeams: action,
       setBlogPostAsNull: action,
       sortOrder: observable,
       tags: observable
@@ -26,6 +27,7 @@ export class BlogPostStore {
 
     this.fetchBlogPostList();
     this.fetchTags();
+    this.fetchTeams();
   }
 
   fetchTags = async (tags) => {
@@ -98,6 +100,14 @@ export class BlogPostStore {
         return this.tags.find((item) => item.id === tag.sys.id);
       })
     };
+  };
+
+  fetchTeams = async () => {
+    const url = `/api/static/basketball/teams`;
+    const response = await fetch(url);
+    const data = await response.json();
+    console.log(data);
+    // this.teams = data;
   };
 
   setBlogPostAsNull = () => {

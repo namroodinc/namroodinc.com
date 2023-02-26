@@ -1,4 +1,7 @@
 const contentful = require("contentful");
+const Papa = require("papaparse");
+const fs = require("fs");
+const path = require("path");
 
 module.exports = function (app) {
   const client = contentful.createClient({
@@ -41,5 +44,39 @@ module.exports = function (app) {
       .getTags()
       .then((response) => res.json(response.items))
       .catch(console.error);
+  });
+
+  app.get("/api/static/:sport/teams/:sortOrder", (req, res) => {
+    const { sport } = req.params;
+    const { skip, limit, sortOrder } = req.query;
+
+    const data = fs.readFileSync(
+      path.join(
+        __dirname,
+        `./packages/pitchgen/api/static/${sport}/teams/teams.csv`
+      ),
+      "utf8"
+    );
+
+    const parsedData = Papa.parse(data, {
+      header: true,
+      skipEmptyLines: true
+    });
+
+    const { data: teamsData } = parsedData;
+
+    const sortedTeamsData = teamsData.sort((a, b) => {
+      if (sortOrder === "asc") {
+        return a.name > b.name ? 1 : -1;
+      } else {
+        return a.name < b.name ? 1 : -1;
+      }
+    });
+
+    const slicedTeamsData = sortedTeamsData.slice(skip, limit);
+
+    console.log(slicedTeamsData);
+
+    res.json(slicedTeamsData);
   });
 };
