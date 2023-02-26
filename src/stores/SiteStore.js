@@ -7,7 +7,7 @@ export class SiteStore {
   name = process.env.REACT_APP_MY_NAME;
   theme = localStorage.getItem("theme") || "light";
   twitter = process.env.REACT_APP_MY_TWITTER;
-  siteName = "namrood---inc";
+  siteName = "namrood,inc.";
 
   constructor() {
     makeObservable(this, {

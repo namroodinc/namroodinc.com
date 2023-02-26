@@ -1,0 +1,15 @@
+@import "../../global";
+
+.page {
+  margin: auto;
+  width: 100%;
+  max-width: $contentMaxWidth;
+
+  &DateTime {
+    color: var(--secondary-text-color);
+  }
+
+  img {
+    width: 100%;
+  }
+}

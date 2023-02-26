@@ -1,10 +1,11 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import BlogPost from "./components/blogPost";
+import Home from "./components/home";
 import Layout from "./components/layout";
+import Page from "./components/page";
 import { StoresProvider, stores } from "./stores";
 
 import "./App.css";
-import Home from "./components/home";
 
 function App() {
   return (
@@ -14,6 +15,10 @@ function App() {
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
             <Route path="post/:id" element={<BlogPost />} />
+            <Route
+              path="about"
+              element={<Page id="35UdcXAsSsugQUqQ2oY0Ym" />}
+            />
           </Route>
         </Routes>
       </StoresProvider>
