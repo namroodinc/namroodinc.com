@@ -14,11 +14,11 @@ function App() {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
-            <Route path="post/:id" element={<BlogPost />} />
             <Route
               path="about"
               element={<Page id="35UdcXAsSsugQUqQ2oY0Ym" />}
             />
+            <Route path="post/:id" element={<BlogPost />} />
           </Route>
         </Routes>
       </StoresProvider>
