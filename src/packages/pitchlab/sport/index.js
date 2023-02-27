@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import { observer } from "mobx-react-lite";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useStore } from "../../../stores";
+import Table from "../../../components/table";
 
 const Sport = observer(() => {
   const teamsStore = useStore("teamsStore");
@@ -19,22 +20,15 @@ const Sport = observer(() => {
   return (
     <div>
       <h1>{sport}</h1>
-      <table>
-        <thead>
-          <tr>
-            <th>Team</th>
-          </tr>
-        </thead>
-        <tbody>
-          {teams.map((team) => {
-            return (
-              <tr key={team.teamId}>
-                <td>{team.fullName}</td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+      <Table
+        columns={["Team", "Stadium (capacity)"]}
+        rows={teams.map((team) => [
+          <Link to={`/packages/pitchlab/${sport}/team/${team.teamId}`}>
+            {team.fullName}
+          </Link>,
+          `${team.stadium} (${team.stadiumCapacity.toLocaleString()})`
+        ])}
+      />
     </div>
   );
 });

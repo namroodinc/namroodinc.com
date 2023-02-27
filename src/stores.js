@@ -1,5 +1,5 @@
 import { createContext, useContext } from "react";
-import { TeamsStore } from "./packages/pitchgen/stores/TeamsStore";
+import { TeamsStore } from "./packages/pitchlab/stores/TeamsStore";
 import { AssetsStore } from "./stores/AssetsStore";
 import { BlogPostStore } from "./stores/BlogPostStore";
 import { HomeStore } from "./stores/HomeStore";

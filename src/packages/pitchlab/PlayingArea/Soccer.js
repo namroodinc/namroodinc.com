@@ -12,6 +12,7 @@ function SoccerPitch(props) {
     height,
     isHorizontal,
     padding,
+    showGrid,
     strokeColor,
     teams,
     width
@@ -172,33 +173,34 @@ function SoccerPitch(props) {
               strokeWidth={strokeWidth}
             />
           </g>
-          {/* show dashed grid dividing the pitch up into 10 boxes wide and 5 high */}
-          {/* <g>
-            {d3.range(0, 10).map((i) => (
-              <line
-                key={i}
-                x1={width * (i / 10)}
-                y1={0}
-                x2={width * (i / 10)}
-                y2={height}
-                stroke={strokeColor}
-                strokeWidth={strokeWidth}
-                strokeDasharray="5, 5"
-              />
-            ))}
-            {d3.range(0, 5).map((i) => (
-              <line
-                key={i}
-                x1={0}
-                y1={height * (i / 5)}
-                x2={width}
-                y2={height * (i / 5)}
-                stroke={strokeColor}
-                strokeWidth={strokeWidth}
-                strokeDasharray="5, 5"
-              />
-            ))}
-          </g> */}
+          {showGrid && (
+            <g>
+              {d3.range(0, width, width / 15).map((x, i) => (
+                <line
+                  key={i}
+                  x1={x}
+                  y1={0}
+                  x2={x}
+                  y2={height}
+                  stroke={strokeColor}
+                  strokeWidth={strokeWidth}
+                  strokeDasharray="2,2"
+                />
+              ))}
+              {d3.range(0, height, height / 10).map((y, i) => (
+                <line
+                  key={i}
+                  x1={0}
+                  y1={y}
+                  x2={width}
+                  y2={y}
+                  stroke={strokeColor}
+                  strokeWidth={strokeWidth}
+                  strokeDasharray="2,2"
+                />
+              ))}
+            </g>
+          )}
         </g>
       </g>
       {/* players layer */}
@@ -224,6 +226,7 @@ SoccerPitch.defaultProps = {
   height: 480, // a soccer pitch is 80 yards wide
   isHorizontal: true,
   padding: 20,
+  showGrid: false,
   strokeColor: "white",
   teams: [],
   width: 720 // a soccer pitch is 120 yards long
@@ -234,6 +237,7 @@ SoccerPitch.propTypes = {
   height: propTypes.number,
   isHorizontal: propTypes.bool,
   padding: propTypes.number,
+  showGrid: propTypes.bool,
   strokeColor: propTypes.string,
   teams: propTypes.array,
   width: propTypes.number

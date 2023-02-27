@@ -22,8 +22,8 @@ const Header = observer(() => {
         <Link className={styles.headerNavLink} to="/about">
           About me
         </Link>
-        <Link className={styles.headerNavLink} to="/packages/pitchgen">
-          PitchGen
+        <Link className={styles.headerNavLink} to="/packages/pitchlab">
+          PitchLab
         </Link>
       </div>
       <Button

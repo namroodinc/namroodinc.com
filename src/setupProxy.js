@@ -60,7 +60,7 @@ module.exports = function (app) {
     const data = fs.readFileSync(
       path.join(
         __dirname,
-        `./packages/pitchgen/api/static/${sport}/teams/teams.csv`
+        `./packages/pitchlab/api/static/${sport}/teams/teams.csv`
       ),
       "utf8"
     );
@@ -71,9 +71,9 @@ module.exports = function (app) {
 
     const sortedTeamsData = teamsData.sort((a, b) => {
       if (sortOrder === "asc") {
-        return a.name > b.name ? 1 : -1;
+        return a.fullName < b.fullName ? 1 : -1;
       } else {
-        return a.name < b.name ? 1 : -1;
+        return a.fullName > b.fullName ? 1 : -1;
       }
     });
 
@@ -86,7 +86,7 @@ module.exports = function (app) {
     const data = fs.readFileSync(
       path.join(
         __dirname,
-        `./packages/pitchgen/api/static/${sport}/teams/teams.csv`
+        `./packages/pitchlab/api/static/${sport}/teams/teams.csv`
       ),
       "utf8"
     );
@@ -100,7 +100,7 @@ module.exports = function (app) {
     const playersData = fs.readFileSync(
       path.join(
         __dirname,
-        `./packages/pitchgen/api/static/${sport}/team/${teamId}.csv`
+        `./packages/pitchlab/api/static/${sport}/team/${teamId}.csv`
       ),
       "utf8"
     );

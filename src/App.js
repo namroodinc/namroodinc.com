@@ -4,9 +4,9 @@ import Home from "./components/home";
 import Layout from "./components/layout";
 import Page from "./components/page";
 import { StoresProvider, stores } from "./stores";
-import PitchGen from "./packages/pitchgen";
-import PitchGenLayout from "./packages/pitchgen/layout";
-import Sport from "./packages/pitchgen/sport";
+import PitchLab from "./packages/pitchlab";
+import PitchLabLayout from "./packages/pitchlab/layout";
+import Sport from "./packages/pitchlab/sport";
 
 import "./App.css";
 
@@ -22,8 +22,8 @@ function App() {
               element={<Page id="35UdcXAsSsugQUqQ2oY0Ym" />}
             />
             <Route path="post/:id" element={<BlogPost />} />
-            <Route path="packages/pitchgen" element={<PitchGenLayout />}>
-              <Route index element={<PitchGen />} />
+            <Route path="packages/pitchlab" element={<PitchLabLayout />}>
+              <Route index element={<PitchLab />} />
               <Route path=":sport" element={<Sport />} />
             </Route>
           </Route>

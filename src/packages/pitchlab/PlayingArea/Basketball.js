@@ -7,8 +7,15 @@ import * as d3 from "d3";
 // The ratio of the width to the height is 0.5333.
 
 function BasketballCourt(props) {
-  const { fillColor, height, isHorizontal, padding, strokeColor, width } =
-    props;
+  const {
+    fillColor,
+    height,
+    isHorizontal,
+    padding,
+    showGrid,
+    strokeColor,
+    width
+  } = props;
 
   const strokeWidth = 2;
 
@@ -148,6 +155,34 @@ function BasketballCourt(props) {
           fill={fillColor}
         />
       </g>
+      {showGrid && (
+        <g>
+          {d3.range(0, width, width / 15).map((x, i) => (
+            <line
+              key={i}
+              x1={x}
+              y1={0}
+              x2={x}
+              y2={height}
+              stroke={strokeColor}
+              strokeWidth={strokeWidth}
+              strokeDasharray="2,2"
+            />
+          ))}
+          {d3.range(0, height, height / 10).map((y, i) => (
+            <line
+              key={i}
+              x1={0}
+              y1={y}
+              x2={width}
+              y2={y}
+              stroke={strokeColor}
+              strokeWidth={strokeWidth}
+              strokeDasharray="2,2"
+            />
+          ))}
+        </g>
+      )}
       <g
         transform={
           isHorizontal
@@ -196,6 +231,7 @@ BasketballCourt.defaultProps = {
   height: 384, // a basketball court is 16.4 yards wide
   isHorizontal: true,
   padding: 20,
+  showGrid: false,
   strokeColor: "white",
   width: 720 // a basketball court is 30.62 yards long
 };
@@ -205,6 +241,7 @@ BasketballCourt.propTypes = {
   height: propTypes.number,
   isHorizontal: propTypes.bool,
   padding: propTypes.number,
+  showGrid: propTypes.bool,
   strokeColor: propTypes.string,
   width: propTypes.number
 };

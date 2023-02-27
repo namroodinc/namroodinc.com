@@ -39,4 +39,16 @@
   &[data-gap="xl"] {
     gap: $xl;
   }
+
+  &[data-vertical-alignment="top"] {
+    align-items: start;
+  }
+
+  &[data-vertical-alignment="center"] {
+    align-items: center;
+  }
+
+  &[data-vertical-alignment="bottom"] {
+    align-items: end;
+  }
 }
