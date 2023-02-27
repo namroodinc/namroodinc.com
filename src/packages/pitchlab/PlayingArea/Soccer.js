@@ -9,6 +9,11 @@ import { PlayerGrouper } from "../Players";
 function SoccerPitch(props) {
   const {
     fillColor,
+    heatMapData,
+    heatMapDataHighestValue,
+    heatMapDataLowestValue,
+    heatMapNumberOfColumns,
+    heatMapNumberOfRows,
     height,
     isHorizontal,
     padding,
@@ -175,30 +180,92 @@ function SoccerPitch(props) {
           </g>
           {showGrid && (
             <g>
-              {d3.range(0, width, width / 15).map((x, i) => (
-                <line
-                  key={i}
-                  x1={x}
-                  y1={0}
-                  x2={x}
-                  y2={height}
-                  stroke={strokeColor}
-                  strokeWidth={strokeWidth}
-                  strokeDasharray="2,2"
-                />
-              ))}
-              {d3.range(0, height, height / 10).map((y, i) => (
-                <line
-                  key={i}
-                  x1={0}
-                  y1={y}
-                  x2={width}
-                  y2={y}
-                  stroke={strokeColor}
-                  strokeWidth={strokeWidth}
-                  strokeDasharray="2,2"
-                />
-              ))}
+              <g>
+                {d3
+                  .range(0, width, width / heatMapNumberOfColumns)
+                  .map((x, i) => (
+                    <line
+                      key={i}
+                      x1={x}
+                      y1={0}
+                      x2={x}
+                      y2={height}
+                      stroke={strokeColor}
+                      strokeWidth={strokeWidth}
+                      strokeDasharray="2,2"
+                    />
+                  ))}
+                {d3
+                  .range(0, height, height / heatMapNumberOfRows)
+                  .map((y, i) => (
+                    <line
+                      key={i}
+                      x1={0}
+                      y1={y}
+                      x2={width}
+                      y2={y}
+                      stroke={strokeColor}
+                      strokeWidth={strokeWidth}
+                      strokeDasharray="2,2"
+                    />
+                  ))}
+              </g>
+              {/* <g>
+                {d3
+                  .range(0, width, width / heatMapNumberOfColumns)
+                  .map((x, i) =>
+                    d3
+                      .range(0, height, height / heatMapNumberOfRows)
+                      .map((y, j) => (
+                        <rect
+                          key={`${i}-${j}`}
+                          x={x}
+                          y={y}
+                          width={width / heatMapNumberOfColumns}
+                          height={height / heatMapNumberOfRows}
+                          fill={
+                            ["red", "green", "blue", "yellow"][
+                              Math.floor(Math.random() * 4)
+                            ]
+                          }
+                        />
+                      ))
+                  )}
+              </g> */}
+              <g>
+                {heatMapData.map((row, i) =>
+                  row.map((cell, j) => (
+                    <g key={`${i}-${j}`}>
+                      <rect
+                        x={j * (width / heatMapNumberOfColumns)}
+                        y={i * (height / heatMapNumberOfRows)}
+                        width={width / heatMapNumberOfColumns}
+                        height={height / heatMapNumberOfRows}
+                        fill={d3
+                          .scaleLinear()
+                          .domain([
+                            heatMapDataLowestValue,
+                            heatMapDataHighestValue
+                          ])
+                          .range(["rgba(0, 0, 255, 0.05)", "#FFFF00"])(cell)}
+                      />
+                      {/* also have the value text horizontally/vertically positioned above the above rectangle */}
+                      <text
+                        x={j * (width / heatMapNumberOfColumns)}
+                        y={i * (height / heatMapNumberOfRows)}
+                        dx={width / heatMapNumberOfColumns / 2}
+                        dy={height / heatMapNumberOfRows / 2}
+                        textAnchor="middle"
+                        alignmentBaseline="central"
+                        fontSize={10}
+                        fill="#000"
+                      >
+                        {cell}%
+                      </text>
+                    </g>
+                  ))
+                )}
+              </g>
             </g>
           )}
         </g>
@@ -223,6 +290,11 @@ function SoccerPitch(props) {
 
 SoccerPitch.defaultProps = {
   fillColor: "green",
+  heatMapData: [],
+  heatMapDataHighestValue: 1,
+  heatMapDataLowestValue: 0,
+  heatMapNumberOfColumns: 16,
+  heatMapNumberOfRows: 12,
   height: 480, // a soccer pitch is 80 yards wide
   isHorizontal: true,
   padding: 20,
@@ -234,6 +306,11 @@ SoccerPitch.defaultProps = {
 
 SoccerPitch.propTypes = {
   fillColor: propTypes.string,
+  heatMapData: propTypes.arrayOf(propTypes.array),
+  heatMapDataHighestValue: propTypes.number,
+  heatMapDataLowestValue: propTypes.number,
+  heatMapNumberOfColumns: propTypes.number,
+  heatMapNumberOfRows: propTypes.number,
   height: propTypes.number,
   isHorizontal: propTypes.bool,
   padding: propTypes.number,

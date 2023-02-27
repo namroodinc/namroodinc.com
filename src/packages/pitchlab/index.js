@@ -16,7 +16,13 @@ export default function PitchLab() {
           strokeColor="#fbfbfb"
           teams={[]}
         />
-        <SoccerPitch width={360} height={240} isHorizontal={false} teams={[]} />
+        <SoccerPitch
+          width={360}
+          height={240}
+          showGrid
+          isHorizontal={false}
+          teams={[]}
+        />
         <SoccerPitch fillColor="#252525" strokeColor="#fbfbfb" teams={[]} />
         <SoccerPitch width={360} height={240} isHorizontal={false} teams={[]} />
 

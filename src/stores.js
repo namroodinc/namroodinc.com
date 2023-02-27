@@ -1,5 +1,4 @@
 import { createContext, useContext } from "react";
-import { TeamsStore } from "./packages/pitchlab/stores/TeamsStore";
 import { AssetsStore } from "./stores/AssetsStore";
 import { BlogPostStore } from "./stores/BlogPostStore";
 import { HomeStore } from "./stores/HomeStore";
@@ -11,8 +10,7 @@ export const stores = Object.freeze({
   blogPostStore: new BlogPostStore(),
   homeStore: new HomeStore(),
   pageStore: new PageStore(),
-  siteStore: new SiteStore(),
-  teamsStore: new TeamsStore()
+  siteStore: new SiteStore()
 });
 
 export const StoresContext = createContext(stores);

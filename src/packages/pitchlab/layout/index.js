@@ -1,10 +1,11 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 import Button from "../../../components/button";
+import { pitchLabStores, PitchLabStoresProvider } from "../stores";
 
 const PitchLabLayout = () => {
   return (
-    <>
+    <PitchLabStoresProvider value={pitchLabStores}>
       <div>
         <Button
           buttonType="link"
@@ -26,7 +27,7 @@ const PitchLabLayout = () => {
         />
       </div>
       <Outlet />
-    </>
+    </PitchLabStoresProvider>
   );
 };
 

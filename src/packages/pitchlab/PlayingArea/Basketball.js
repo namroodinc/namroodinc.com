@@ -9,6 +9,8 @@ import * as d3 from "d3";
 function BasketballCourt(props) {
   const {
     fillColor,
+    heatMapColumns,
+    heatMapRows,
     height,
     isHorizontal,
     padding,
@@ -157,7 +159,7 @@ function BasketballCourt(props) {
       </g>
       {showGrid && (
         <g>
-          {d3.range(0, width, width / 15).map((x, i) => (
+          {d3.range(0, width, width / heatMapColumns).map((x, i) => (
             <line
               key={i}
               x1={x}
@@ -169,7 +171,7 @@ function BasketballCourt(props) {
               strokeDasharray="2,2"
             />
           ))}
-          {d3.range(0, height, height / 10).map((y, i) => (
+          {d3.range(0, height, height / heatMapRows).map((y, i) => (
             <line
               key={i}
               x1={0}
@@ -228,6 +230,8 @@ function BasketballCourt(props) {
 
 BasketballCourt.defaultProps = {
   fillColor: "blue",
+  heatMapColumns: 16,
+  heatMapRows: 12,
   height: 384, // a basketball court is 16.4 yards wide
   isHorizontal: true,
   padding: 20,
@@ -238,6 +242,8 @@ BasketballCourt.defaultProps = {
 
 BasketballCourt.propTypes = {
   fillColor: propTypes.string,
+  heatMapColumns: propTypes.number,
+  heatMapRows: propTypes.number,
   height: propTypes.number,
   isHorizontal: propTypes.bool,
   padding: propTypes.number,

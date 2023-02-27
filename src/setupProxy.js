@@ -111,4 +111,22 @@ module.exports = function (app) {
 
     res.json({ ...team, players });
   });
+
+  app.get("/api/static/:sport/heatmaps/:heatmapType", (req, res) => {
+    const { sport, heatmapType } = req.params;
+
+    const data = fs.readFileSync(
+      path.join(
+        __dirname,
+        `./packages/pitchlab/api/static/${sport}/heatmaps/${heatmapType}.csv`
+      ),
+      "utf8"
+    );
+
+    const parsedData = Papa.parse(data, { ...papaParseOptions, header: false });
+
+    const { data: heatmapData } = parsedData;
+
+    res.json(heatmapData);
+  });
 };

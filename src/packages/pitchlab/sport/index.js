@@ -1,17 +1,24 @@
 import React, { useEffect } from "react";
 import { observer } from "mobx-react-lite";
 import { Link, useParams } from "react-router-dom";
-import { useStore } from "../../../stores";
+import { usePitchLabStore } from "../stores";
 import Table from "../../../components/table";
+import { SoccerPitch } from "../PlayingArea";
 
 const Sport = observer(() => {
-  const teamsStore = useStore("teamsStore");
+  const heatMapStore = usePitchLabStore("heatMapStore");
+  const teamsStore = usePitchLabStore("teamsStore");
+
   const { teams } = teamsStore;
   const { sport } = useParams();
 
   useEffect(() => {
     teamsStore.fetchTeams(sport);
   }, [teamsStore, sport]);
+
+  useEffect(() => {
+    heatMapStore.fetchHeatMap(sport, "perceivedThreat");
+  }, [heatMapStore, sport]);
 
   if (!teams) {
     return <div>Loading...</div>;
@@ -28,6 +35,13 @@ const Sport = observer(() => {
           </Link>,
           `${team.stadium} (${team.stadiumCapacity.toLocaleString()})`
         ])}
+      />
+
+      <SoccerPitch
+        fillColor="#fff"
+        showGrid
+        strokeColor="#ccc"
+        {...heatMapStore.heatMapDataUnpack}
       />
     </div>
   );
