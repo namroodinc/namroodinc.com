@@ -3,7 +3,7 @@ import { observer } from "mobx-react-lite";
 import { Link, useParams } from "react-router-dom";
 import { usePitchLabStore } from "../stores";
 import Table from "../../../components/table";
-import { SoccerPitch } from "../PlayingArea";
+import PlayingArea from "../PlayingArea";
 
 const Sport = observer(() => {
   const heatMapStore = usePitchLabStore("heatMapStore");
@@ -37,11 +37,15 @@ const Sport = observer(() => {
         ])}
       />
 
-      <SoccerPitch
-        fillColor="#fff"
+      <PlayingArea
+        strokeColor="#fbfbfb"
+        heatMapData={heatMapStore.heatMapData}
+        isHorizontal={false}
+      />
+      <PlayingArea
+        strokeColor="#fbfbfb"
+        heatMapData={heatMapStore.heatMapData}
         showGrid
-        strokeColor="#ccc"
-        {...heatMapStore.heatMapDataUnpack}
       />
     </div>
   );

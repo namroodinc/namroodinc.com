@@ -1,4 +1,4 @@
-import { action, computed, makeObservable, observable } from "mobx";
+import { action, makeObservable, observable } from "mobx";
 
 export class HeatMapStore {
   heatMapData = [];
@@ -7,8 +7,7 @@ export class HeatMapStore {
     makeObservable(this, {
       heatMapData: observable,
       fetchHeatMap: action,
-      resetHeatMap: action,
-      heatMapDataUnpack: computed
+      resetHeatMap: action
     });
   }
 
@@ -19,20 +18,6 @@ export class HeatMapStore {
 
     this.heatMapData = data;
   };
-
-  get heatMapDataUnpack() {
-    return {
-      heatMapData: this.heatMapData,
-      heatMapDataHighestValue: Math.max(
-        ...this.heatMapData.map((row) => Math.max(...row))
-      ),
-      heatMapDataLowestValue: Math.min(
-        ...this.heatMapData.map((row) => Math.min(...row))
-      ),
-      heatMapNumberOfColumns: this.heatMapData[0]?.length,
-      heatMapNumberOfRows: this.heatMapData.length
-    };
-  }
 
   resetHeatMap = () => {
     this.heatMapData = [];
