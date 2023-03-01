@@ -12,12 +12,14 @@ const Sport = observer(() => {
   const { teams } = teamsStore;
   const { sport } = useParams();
 
+  const mapLayer = "heatMap"; // could be "heatMap" or "perceivedThreat"
+
   useEffect(() => {
     teamsStore.fetchTeams(sport);
   }, [teamsStore, sport]);
 
   useEffect(() => {
-    heatMapStore.fetchHeatMap(sport, "perceivedThreat");
+    heatMapStore.fetchHeatMap(sport, `${mapLayer}01`);
   }, [heatMapStore, sport]);
 
   if (!teams) {
@@ -39,13 +41,18 @@ const Sport = observer(() => {
 
       <PlayingArea
         strokeColor="#fbfbfb"
-        heatMapData={heatMapStore.heatMapData}
-        isHorizontal={false}
+        mapLayerData={heatMapStore.heatMapData}
+        mapLayerType={mapLayer}
+        isLandscape={false}
+        sport={sport}
       />
       <PlayingArea
+        fillColor={"#ccc"}
         strokeColor="#fbfbfb"
-        heatMapData={heatMapStore.heatMapData}
+        mapLayerData={heatMapStore.heatMapData}
+        mapLayerType={mapLayer}
         showGrid
+        sport={sport}
       />
     </div>
   );

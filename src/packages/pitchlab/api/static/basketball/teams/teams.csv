@@ -1,7 +1,7 @@
-teamId,fullName,stadium,stadiumCapacity,founded,cityBasedIn,countryBasedIn,brandColor
-CHI,Chicago Bulls,United Center,20917,1966,Chicago,USA,#ce1141
-LAL,Los Angeles Lakers,Staples Center,18997,1947,Los Angeles,USA,#552583
-MIA,Miami Heat,AmericanAirlines Arena,19600,1988,Miami,USA,#98002e
-UTA,Utah Jazz,Vivint Arena,18303,1974,Salt Lake City,USA,#002b5c
-DET,Detroit Pistons,Little Caesars Arena,20491,1941,Detroit,USA,#1d428a
-CHA,Charlotte Hornets,Spectrum Center,19077,1988,Charlotte,United States,#00788C
+teamId,fullName,stadium,stadiumCapacity,founded,cityBasedIn,countryBasedIn,brandColor,sport
+CHI,Chicago Bulls,United Center,20917,1966,Chicago,USA,#ce1141,basketball
+LAL,Los Angeles Lakers,Staples Center,18997,1947,Los Angeles,USA,#552583,basketball
+MIA,Miami Heat,AmericanAirlines Arena,19600,1988,Miami,USA,#98002e,basketball
+UTA,Utah Jazz,Vivint Arena,18303,1974,Salt Lake City,USA,#002b5c,basketball
+DET,Detroit Pistons,Little Caesars Arena,20491,1941,Detroit,USA,#1d428a,basketball
+CHA,Charlotte Hornets,Spectrum Center,19077,1988,Charlotte,United States,#00788C,basketball

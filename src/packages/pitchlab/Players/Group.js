@@ -12,7 +12,7 @@ const Group = (props) => {
           {player.number}
         </text> */}
         <text x={0} y={0} fill={colors.secondary}>
-          {player.position}
+          {player.lastName}
         </text>
       </>
     );
@@ -21,7 +21,7 @@ const Group = (props) => {
   return (
     <g
       transform={
-        rest.isHorizontal
+        rest.isLandscape
           ? `translate(${rest.index === 0 ? 0 : rest.width}, 0)`
           : `translate(0, ${rest.index === 0 ? 0 : rest.width})`
       }
@@ -37,24 +37,23 @@ const Group = (props) => {
           <g
             key={i}
             transform={
-              rest.isHorizontal
+              rest.isLandscape
                 ? `translate(${rowTranslate}, 0)`
                 : `translate(0, ${rowTranslate})`
             }
           >
-            {row.players.map((player, j) => {
+            {row.map((player, j) => {
               const playerTranslate =
                 rest.index === 0
-                  ? j * (rest.height / row.players.length) +
-                    rest.height / row.players.length / 2
-                  : (row.players.length - j - 1) *
-                      (rest.height / row.players.length) +
-                    rest.height / row.players.length / 2;
+                  ? j * (rest.height / row.length) +
+                    rest.height / row.length / 2
+                  : (row.length - j - 1) * (rest.height / row.length) +
+                    rest.height / row.length / 2;
               return (
                 <g
                   key={j}
                   transform={
-                    rest.isHorizontal
+                    rest.isLandscape
                       ? `translate(0, ${playerTranslate})`
                       : `translate(${playerTranslate}, 0)`
                   }
@@ -75,22 +74,22 @@ Group.propTypes = {
     primary: propTypes.string.isRequired,
     secondary: propTypes.string.isRequired
   }).isRequired,
-  captain: propTypes.shape({
-    name: propTypes.string.isRequired
-  }).isRequired,
+  // captain: propTypes.shape({
+  //   name: propTypes.string.isRequired
+  // }).isRequired,
   height: propTypes.number.isRequired,
-  isHorizontal: propTypes.bool.isRequired,
+  isLandscape: propTypes.bool.isRequired,
   players: propTypes.array.isRequired,
   width: propTypes.number.isRequired
 };
 
 Group.defaultProps = {
-  captain: {},
+  // captain: {},
   colors: {
     primary: "red",
     secondary: "white"
   },
-  isHorizontal: true,
+  isLandscape: true,
   players: []
 };
 

@@ -8,8 +8,11 @@ import { playingAreaConfig } from "./utils";
 function PlayingArea(props) {
   const {
     fillColor,
-    heatMapData,
-    isHorizontal,
+    gridColumns,
+    gridRows,
+    isLandscape,
+    mapLayerData,
+    mapLayerType,
     padding,
     showGrid,
     sport,
@@ -39,35 +42,26 @@ function PlayingArea(props) {
       return { width, height, playingAreaDecorators, playingAreaHalf };
     }, [sport, fillColor, strokeColor]);
 
-  const heightWithPadding = (isHorizontal ? height : width) + padding * 2;
-  const widthWithPadding = (isHorizontal ? width : height) + padding * 2;
+  const heightWithPadding = (isLandscape ? height : width) + padding * 2;
+  const widthWithPadding = (isLandscape ? width : height) + padding * 2;
 
-  const {
-    heatMapDataHighestValue,
-    heatMapDataLowestValue,
-    heatMapNumberOfColumns,
-    heatMapNumberOfRows
-  } = useMemo(() => {
-    if (heatMapData.length) {
+  const { mapLayerDataHighestValue, mapLayerDataLowestValue } = useMemo(() => {
+    if (mapLayerData.length && mapLayerType === "perceivedThreat") {
       return {
-        heatMapDataHighestValue: Math.max(
-          ...heatMapData.map((row) => Math.max(...row))
+        mapLayerDataHighestValue: Math.max(
+          ...mapLayerData.map((row) => Math.max(...row))
         ),
-        heatMapDataLowestValue: Math.min(
-          ...heatMapData.map((row) => Math.min(...row))
-        ),
-        heatMapNumberOfColumns: heatMapData[0]?.length,
-        heatMapNumberOfRows: heatMapData.length
+        mapLayerDataLowestValue: Math.min(
+          ...mapLayerData.map((row) => Math.min(...row))
+        )
       };
     } else {
       return {
-        heatMapDataHighestValue: 0,
-        heatMapDataLowestValue: 0,
-        heatMapNumberOfColumns: 16,
-        heatMapNumberOfRows: 12
+        mapLayerDataHighestValue: 0,
+        mapLayerDataLowestValue: 0
       };
     }
-  }, [heatMapData]);
+  }, [mapLayerData, mapLayerType]);
 
   return (
     <svg height={heightWithPadding} width={widthWithPadding}>
@@ -82,7 +76,7 @@ function PlayingArea(props) {
       </g>
       <g
         transform={
-          isHorizontal
+          isLandscape
             ? `translate(0, 0)`
             : `translate(0, 0) rotate(90) scale(1, -1)`
         }
@@ -96,73 +90,113 @@ function PlayingArea(props) {
           {showGrid && (
             <g>
               <g>
-                {d3
-                  .range(0, width, width / heatMapNumberOfColumns)
-                  .map((x, i) => (
-                    <line
-                      key={i}
-                      x1={x}
-                      y1={0}
-                      x2={x}
-                      y2={height}
-                      stroke={strokeColor}
-                      strokeWidth={strokeWidth}
-                      strokeDasharray="2,2"
-                    />
-                  ))}
-                {d3
-                  .range(0, height, height / heatMapNumberOfRows)
-                  .map((y, i) => (
-                    <line
-                      key={i}
-                      x1={0}
-                      y1={y}
-                      x2={width}
-                      y2={y}
-                      stroke={strokeColor}
-                      strokeWidth={strokeWidth}
-                      strokeDasharray="2,2"
-                    />
-                  ))}
+                {d3.range(0, width, width / gridColumns).map((x, i) => (
+                  <line
+                    key={i}
+                    x1={x}
+                    y1={0}
+                    x2={x}
+                    y2={height}
+                    stroke={strokeColor}
+                    strokeWidth={strokeWidth}
+                    strokeDasharray="2,2"
+                  />
+                ))}
+                {d3.range(0, height, height / gridRows).map((y, i) => (
+                  <line
+                    key={i}
+                    x1={0}
+                    y1={y}
+                    x2={width}
+                    y2={y}
+                    stroke={strokeColor}
+                    strokeWidth={strokeWidth}
+                    strokeDasharray="2,2"
+                  />
+                ))}
               </g>
             </g>
           )}
-          <g
-            transform={
-              isHorizontal
-                ? ""
-                : `translate(0, ${height}) rotate(180) scale(-1, 1)`
-            }
-          >
-            {heatMapData.map((row, i) =>
-              row.map((cell, j) => (
-                <g key={`${i}-${j}`}>
-                  <rect
-                    x={j * (width / heatMapNumberOfColumns)}
-                    y={i * (height / heatMapNumberOfRows)}
-                    width={width / heatMapNumberOfColumns}
-                    height={height / heatMapNumberOfRows}
+          {mapLayerType === "heatMap" && (
+            <g
+              transform={
+                isLandscape
+                  ? ""
+                  : `translate(0, ${height}) rotate(180) scale(-1, 1)`
+              }
+            >
+              {/* create a 2d density map using the x and y co-ordinates */}
+              {d3
+                .contourDensity()
+                .x((d) => d.x)
+                .y((d) => d.y)
+                .size([width, height])
+                .bandwidth(20)(
+                  mapLayerData.reduce((acc, player) => {
+                    if (player.x && player.y) {
+                      acc.push({
+                        x: width * (player.x / 100),
+                        y: height * (player.y / 100)
+                      });
+                    }
+                    return acc;
+                  }, [])
+                )
+                .map((contour, i) => (
+                  <path
+                    key={i}
+                    d={d3.geoPath()(contour)}
                     fill={d3
                       .scaleLinear()
-                      .domain([heatMapDataLowestValue, heatMapDataHighestValue])
-                      .range(["rgba(0, 0, 255, 0.05)", "#FFFF00"])(cell)}
+                      .domain([0, 1])
+                      .range(["rgba(0, 0, 255, 0.05)", "#FFFF00", "#FF0000"])(
+                      contour.value
+                    )}
                   />
-                  <text
-                    x={j * (width / heatMapNumberOfColumns)}
-                    y={i * (height / heatMapNumberOfRows)}
-                    dx={width / heatMapNumberOfColumns / 2}
-                    dy={height / heatMapNumberOfRows / 2}
-                    textAnchor="middle"
-                    alignmentBaseline="central"
-                    fontSize={10}
-                    fill="#000"
-                  >
-                    {cell}%
-                  </text>
-                </g>
-              ))
-            )}
-          </g>
+                ))}
+            </g>
+          )}
+          {mapLayerType === "perceivedThreat" && (
+            <g
+              transform={
+                isLandscape
+                  ? ""
+                  : `translate(0, ${height}) rotate(180) scale(-1, 1)`
+              }
+            >
+              {mapLayerData.map((row, i) =>
+                row.map((cell, j) => (
+                  <g key={`${i}-${j}`}>
+                    <rect
+                      x={j * (width / gridColumns)}
+                      y={i * (height / gridRows)}
+                      width={width / gridColumns}
+                      height={height / gridRows}
+                      fill={d3
+                        .scaleLinear()
+                        .domain([
+                          mapLayerDataLowestValue,
+                          mapLayerDataHighestValue
+                        ])
+                        .range(["rgba(0, 0, 255, 0.05)", "#FFFF00"])(cell)}
+                    />
+                    <text
+                      x={j * (width / gridColumns)}
+                      y={i * (height / gridRows)}
+                      dx={width / gridColumns / 2}
+                      dy={height / gridRows / 2}
+                      textAnchor="middle"
+                      alignmentBaseline="central"
+                      fontSize={10}
+                      fill="#000"
+                    >
+                      {cell}%
+                    </text>
+                  </g>
+                ))
+              )}
+            </g>
+          )}
         </g>
       </g>
       <g transform={`translate(${padding}, ${padding})`}>
@@ -170,7 +204,7 @@ function PlayingArea(props) {
           <PlayerGrouper
             key={i}
             height={height}
-            isHorizontal={isHorizontal}
+            isLandscape={isLandscape}
             padding={padding}
             width={width / teams.length}
             index={i}
@@ -184,8 +218,11 @@ function PlayingArea(props) {
 
 PlayingArea.defaultProps = {
   fillColor: "green",
-  heatMapData: [],
-  isHorizontal: true,
+  gridColumns: 16,
+  gridRows: 12,
+  isLandscape: true,
+  mapLayerData: [],
+  mapLayerType: "heatMap",
   padding: 20,
   showGrid: false,
   sport: "soccer",
@@ -195,8 +232,11 @@ PlayingArea.defaultProps = {
 
 PlayingArea.propTypes = {
   fillColor: propTypes.string,
-  heatMapData: propTypes.arrayOf(propTypes.array),
-  isHorizontal: propTypes.bool,
+  gridColumns: propTypes.number,
+  gridRows: propTypes.number,
+  isLandscape: propTypes.bool,
+  mapLayerData: propTypes.array,
+  mapLayerType: propTypes.oneOf(["heatMap", "perceivedThreat"]),
   padding: propTypes.number,
   showGrid: propTypes.bool,
   sport: propTypes.oneOf(["soccer", "basketball"]),

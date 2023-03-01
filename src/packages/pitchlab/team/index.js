@@ -1,25 +1,56 @@
-// import React, { useEffect } from "react";
-// import { observer } from "mobx-react-lite";
+import React, { useEffect } from "react";
+import { observer } from "mobx-react-lite";
+import { useParams } from "react-router-dom";
+import { usePitchLabStore } from "../stores";
+import PlayingArea from "../PlayingArea";
 
-// // import styles module
-// import styles from "./styles.module.scss";
+const Team = observer((props) => {
+  const teamsStore = usePitchLabStore("teamsStore");
 
-// const Team = observer((props) => {
-//     const { team } = props;
+  const { teamInFormation, isLoading, team } = teamsStore;
+  const { sport, teamId } = useParams();
 
-//     return (
-//         <div className={styles.team}>
-//         <div className={styles.teamName}>{team.fullName}</div>
-//         <div className={styles.teamStadium}>{team.stadium}</div>
-//         <div className={styles.teamStadiumCapacity}>
-//             {team.stadiumCapacity.toLocaleString()}
-//         </div>
-//         </div>
-//     );
-//     }
+  useEffect(() => {
+    teamsStore.fetchTeam(sport, teamId);
+  }, [teamsStore, sport, teamId]);
 
-//     Team.propTypes = {};
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
-//     Team.defaultProps = {};
+  return (
+    <div>
+      <div>{team.fullName}</div>
+      <div>{team.stadium}</div>
+      <div>{team.stadiumCapacity}</div>
 
-//     export default Team;
+      <PlayingArea
+        sport={sport}
+        teams={[
+          {
+            players: teamInFormation
+          }
+        ]}
+      />
+
+      <PlayingArea
+        sport={sport}
+        teams={[
+          {
+            players: teamInFormation
+          },
+          {
+            players: teamInFormation
+          }
+        ]}
+        isLandscape={false}
+      />
+    </div>
+  );
+});
+
+Team.propTypes = {};
+
+Team.defaultProps = {};
+
+export default Team;

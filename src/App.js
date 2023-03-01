@@ -9,6 +9,7 @@ import PitchLabLayout from "./packages/pitchlab/layout";
 import Sport from "./packages/pitchlab/sport";
 
 import "./App.css";
+import Team from "./packages/pitchlab/team";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
             <Route path="packages/pitchlab" element={<PitchLabLayout />}>
               <Route index element={<PitchLab />} />
               <Route path=":sport" element={<Sport />} />
+              <Route path=":sport/team/:teamId" element={<Team />} />
             </Route>
           </Route>
         </Routes>

@@ -123,7 +123,12 @@ module.exports = function (app) {
       "utf8"
     );
 
-    const parsedData = Papa.parse(data, { ...papaParseOptions, header: false });
+    const parsedData = Papa.parse(
+      data,
+      heatmapType === "perceivedThreat"
+        ? { ...papaParseOptions, header: false }
+        : papaParseOptions
+    );
 
     const { data: heatmapData } = parsedData;
 

@@ -20,7 +20,7 @@ export default function PitchLab() {
           width={360}
           height={240}
           showGrid
-          isHorizontal={false}
+          isLandscape={false}
           teams={[]}
         />
         <PlayingArea
@@ -28,7 +28,7 @@ export default function PitchLab() {
           strokeColor="#fbfbfb"
           sport="basketball"
         />
-        <PlayingArea width={360} height={240} isHorizontal={false} teams={[]} />
+        <PlayingArea width={360} height={240} isLandscape={false} teams={[]} />
       </div>
     </Columns>
   );
