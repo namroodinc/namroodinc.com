@@ -1,7 +1,10 @@
 import { action, makeObservable, observable } from "mobx";
 
 export class HeatMapStore {
-  heatMapData = [];
+  heatMapData = {
+    data: [],
+    dataLayerType: ""
+  };
 
   constructor() {
     makeObservable(this, {
@@ -11,8 +14,8 @@ export class HeatMapStore {
     });
   }
 
-  fetchHeatMap = async (sport, heatmapType) => {
-    const url = `/api/static/${sport}/heatmaps/${heatmapType}`;
+  fetchHeatMap = async (sport, dataLayer, id = "01") => {
+    const url = `/api/static/${sport}/${dataLayer}/${id}`;
     const response = await fetch(url);
     const data = await response.json();
 
@@ -20,6 +23,9 @@ export class HeatMapStore {
   };
 
   resetHeatMap = () => {
-    this.heatMapData = [];
+    this.heatMapData = {
+      data: [],
+      dataLayerType: ""
+    };
   };
 }

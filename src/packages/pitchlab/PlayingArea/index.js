@@ -10,61 +10,80 @@ function PlayingArea(props) {
     fillColor,
     gridColumns,
     gridRows,
+    fullPitchView,
     isLandscape,
-    mapLayerData,
-    mapLayerType,
+    dataLayer,
     padding,
     showGrid,
     sport,
     strokeColor,
+    strokeWidth,
     teams
   } = props;
 
-  const strokeWidth = 1;
+  const { height, width, playingAreaFull, playingAreaHalf } = useMemo(() => {
+    const { height, width, full, half } = playingAreaConfig[sport];
+    const playingAreaFull = full({
+      fillColor,
+      height,
+      width,
+      strokeColor,
+      strokeWidth
+    });
+    const playingAreaHalf = half({
+      fillColor,
+      fullPitchView,
+      height,
+      width,
+      strokeColor,
+      strokeWidth
+    });
+    return { width, height, playingAreaFull, playingAreaHalf };
+  }, [sport, fillColor, fullPitchView, strokeColor, strokeWidth]);
 
-  const { width, height, playingAreaDecorators, playingAreaHalf } =
-    useMemo(() => {
-      const { width, height, decorators, half } = playingAreaConfig[sport];
-      const playingAreaDecorators = decorators({
-        width,
-        height,
-        strokeWidth,
-        strokeColor,
-        fillColor
-      });
-      const playingAreaHalf = half({
-        width,
-        height,
-        strokeWidth,
-        strokeColor,
-        fillColor
-      });
-      return { width, height, playingAreaDecorators, playingAreaHalf };
-    }, [sport, fillColor, strokeColor]);
+  const heightWithPadding =
+    (isLandscape ? height : fullPitchView ? width : width / 2) + padding * 2;
+  const widthWithPadding =
+    (isLandscape ? (fullPitchView ? width : width / 2) : height) + padding * 2;
 
-  const heightWithPadding = (isLandscape ? height : width) + padding * 2;
-  const widthWithPadding = (isLandscape ? width : height) + padding * 2;
-
-  const { mapLayerDataHighestValue, mapLayerDataLowestValue } = useMemo(() => {
-    if (mapLayerData.length && mapLayerType === "perceivedThreat") {
+  const { dataLayerHighestValue, dataLayerLowestValue } = useMemo(() => {
+    if (
+      dataLayer?.data?.length &&
+      dataLayer?.dataLayerType === "perceivedThreat"
+    ) {
       return {
-        mapLayerDataHighestValue: Math.max(
-          ...mapLayerData.map((row) => Math.max(...row))
+        dataLayerHighestValue: Math.max(
+          ...dataLayer.data.map((row) => Math.max(...row))
         ),
-        mapLayerDataLowestValue: Math.min(
-          ...mapLayerData.map((row) => Math.min(...row))
+        dataLayerLowestValue: Math.min(
+          ...dataLayer.data.map((row) => Math.min(...row))
         )
       };
     } else {
       return {
-        mapLayerDataHighestValue: 0,
-        mapLayerDataLowestValue: 0
+        dataLayerHighestValue: 0,
+        dataLayerLowestValue: 0
       };
     }
-  }, [mapLayerData, mapLayerType]);
+  }, [dataLayer]);
 
   return (
-    <svg height={heightWithPadding} width={widthWithPadding}>
+    <svg
+      height={heightWithPadding}
+      width={widthWithPadding}
+      // onClick={(event) => {
+      //   // get x and y co-ordinates of click using pointer instead of mouse minus padding and converting the co-ordinates to percentages
+      //   const x =
+      //     (event.clientX -
+      //       event.target.getBoundingClientRect().left -
+      //       padding) /
+      //     width;
+      //   const y =
+      //     (event.clientY - event.target.getBoundingClientRect().top - padding) /
+      //     height;
+      //   console.log({ x, y });
+      // }}
+    >
       <g>
         <rect
           x={0}
@@ -82,11 +101,15 @@ function PlayingArea(props) {
         }
       >
         <g transform={`translate(${padding}, ${padding})`}>
-          {playingAreaDecorators}
           <g>{playingAreaHalf}</g>
-          <g transform={`translate(${width}, 0) scale(-1, 1)`}>
-            {playingAreaHalf}
-          </g>
+          {fullPitchView && (
+            <>
+              <g transform={`translate(${width}, 0) scale(-1, 1)`}>
+                {playingAreaHalf}
+              </g>
+              {playingAreaFull}
+            </>
+          )}
           {showGrid && (
             <g>
               <g>
@@ -98,7 +121,7 @@ function PlayingArea(props) {
                     x2={x}
                     y2={height}
                     stroke={strokeColor}
-                    strokeWidth={strokeWidth}
+                    strokeWidth={1}
                     strokeDasharray="2,2"
                   />
                 ))}
@@ -110,14 +133,14 @@ function PlayingArea(props) {
                     x2={width}
                     y2={y}
                     stroke={strokeColor}
-                    strokeWidth={strokeWidth}
+                    strokeWidth={1}
                     strokeDasharray="2,2"
                   />
                 ))}
               </g>
             </g>
           )}
-          {mapLayerType === "heatMap" && (
+          {dataLayer.dataLayerType === "heatMap" && (
             <g
               transform={
                 isLandscape
@@ -132,7 +155,7 @@ function PlayingArea(props) {
                 .y((d) => d.y)
                 .size([width, height])
                 .bandwidth(20)(
-                  mapLayerData.reduce((acc, player) => {
+                  dataLayer.data.reduce((acc, player) => {
                     if (player.x && player.y) {
                       acc.push({
                         x: width * (player.x / 100),
@@ -156,7 +179,7 @@ function PlayingArea(props) {
                 ))}
             </g>
           )}
-          {mapLayerType === "perceivedThreat" && (
+          {dataLayer.dataLayerType === "perceivedThreat" && (
             <g
               transform={
                 isLandscape
@@ -164,7 +187,7 @@ function PlayingArea(props) {
                   : `translate(0, ${height}) rotate(180) scale(-1, 1)`
               }
             >
-              {mapLayerData.map((row, i) =>
+              {dataLayer.data.map((row, i) =>
                 row.map((cell, j) => (
                   <g key={`${i}-${j}`}>
                     <rect
@@ -174,10 +197,7 @@ function PlayingArea(props) {
                       height={height / gridRows}
                       fill={d3
                         .scaleLinear()
-                        .domain([
-                          mapLayerDataLowestValue,
-                          mapLayerDataHighestValue
-                        ])
+                        .domain([dataLayerLowestValue, dataLayerHighestValue])
                         .range(["rgba(0, 0, 255, 0.05)", "#FFFF00"])(cell)}
                     />
                     <text
@@ -206,7 +226,7 @@ function PlayingArea(props) {
             height={height}
             isLandscape={isLandscape}
             padding={padding}
-            width={width / teams.length}
+            width={fullPitchView ? width / teams.length : width / 2}
             index={i}
             {...team}
           />
@@ -220,13 +240,14 @@ PlayingArea.defaultProps = {
   fillColor: "green",
   gridColumns: 16,
   gridRows: 12,
+  fullPitchView: true,
   isLandscape: true,
-  mapLayerData: [],
-  mapLayerType: "heatMap",
+  dataLayer: {},
   padding: 20,
   showGrid: false,
   sport: "soccer",
   strokeColor: "white",
+  strokeWidth: 2,
   teams: []
 };
 
@@ -234,13 +255,14 @@ PlayingArea.propTypes = {
   fillColor: propTypes.string,
   gridColumns: propTypes.number,
   gridRows: propTypes.number,
+  fullPitchView: propTypes.bool,
   isLandscape: propTypes.bool,
-  mapLayerData: propTypes.array,
-  mapLayerType: propTypes.oneOf(["heatMap", "perceivedThreat"]),
+  dataLayer: propTypes.object,
   padding: propTypes.number,
   showGrid: propTypes.bool,
   sport: propTypes.oneOf(["soccer", "basketball"]),
   strokeColor: propTypes.string,
+  strokeWidth: propTypes.number,
   teams: propTypes.array
 };
 

@@ -112,26 +112,26 @@ module.exports = function (app) {
     res.json({ ...team, players });
   });
 
-  app.get("/api/static/:sport/heatmaps/:heatmapType", (req, res) => {
-    const { sport, heatmapType } = req.params;
+  app.get("/api/static/:sport/:dataLayerType/:id", (req, res) => {
+    const { sport, dataLayerType, id } = req.params;
 
     const data = fs.readFileSync(
       path.join(
         __dirname,
-        `./packages/pitchlab/api/static/${sport}/heatmaps/${heatmapType}.csv`
+        `./packages/pitchlab/api/static/${sport}/${dataLayerType}/${id}.csv`
       ),
       "utf8"
     );
 
     const parsedData = Papa.parse(
       data,
-      heatmapType === "perceivedThreat"
+      dataLayerType === "perceivedThreat"
         ? { ...papaParseOptions, header: false }
         : papaParseOptions
     );
 
     const { data: heatmapData } = parsedData;
 
-    res.json(heatmapData);
+    res.json({ data: heatmapData, dataLayerType });
   });
 };
