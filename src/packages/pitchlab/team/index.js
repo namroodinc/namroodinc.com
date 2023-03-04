@@ -4,6 +4,9 @@ import { useParams } from "react-router-dom";
 import { usePitchLabStore } from "../stores";
 import PlayingArea from "../PlayingArea";
 
+import styles from "./styles.module.scss";
+import Columns from "../../../components/columns";
+
 const Team = observer((props) => {
   const teamsStore = usePitchLabStore("teamsStore");
 
@@ -19,33 +22,41 @@ const Team = observer((props) => {
   }
 
   return (
-    <div>
-      <div>{team.fullName}</div>
-      <div>{team.stadium}</div>
-      <div>{team.stadiumCapacity}</div>
+    <main role="main" className={styles.contentDisplay}>
+      <Columns numberOfColumns={1}>
+        <h1>{team.fullName}</h1>
 
-      <PlayingArea
-        sport={sport}
-        teams={[
-          {
-            players: teamInFormation
-          }
-        ]}
-      />
+        <span className={styles.contentDisplayAdditionalInfo}>
+          {team.stadium} ({team.stadiumCapacity.toLocaleString()} capacity)
+        </span>
 
-      <PlayingArea
-        sport={sport}
-        teams={[
-          {
-            players: teamInFormation
-          },
-          {
-            players: teamInFormation
-          }
-        ]}
-        isLandscape={false}
-      />
-    </div>
+        <span className={styles.contentDisplayAdditionalInfo}>
+          {team.cityBasedIn}, {team.countryBasedIn}
+        </span>
+
+        <PlayingArea
+          sport={sport}
+          teams={[
+            {
+              players: teamInFormation
+            }
+          ]}
+        />
+
+        <PlayingArea
+          sport={sport}
+          teams={[
+            {
+              players: teamInFormation
+            },
+            {
+              players: teamInFormation
+            }
+          ]}
+          isLandscape={false}
+        />
+      </Columns>
+    </main>
   );
 });
 

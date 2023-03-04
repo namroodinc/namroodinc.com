@@ -1,21 +1,36 @@
 @import "../../global";
 
-.contentDisplay {
-  margin: auto;
-  width: 100%;
-  max-width: $contentMaxWidth;
-
-  &DateTime {
-    color: var(--secondary-text-color);
-  }
-
-  img {
+@mixin contentDisplay {
+  .contentDisplay {
+    margin: auto;
     width: 100%;
+    max-width: $contentMaxWidth;
+
+    &DateTime,
+    &AdditionalInfo {
+      color: var(--secondary-text-color);
+    }
+
+    h1 {
+      &.capitalize {
+        text-transform: capitalize;
+      }
+    }
+
+    img {
+      width: 100%;
+    }
+
+    p {
+      margin: 0;
+    }
+  }
+
+  .tags {
+    align-items: center;
+    display: flex;
+    gap: $md;
   }
 }
 
-.tags {
-  align-items: center;
-  display: flex;
-  gap: $md;
-}
+@include contentDisplay;

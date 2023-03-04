@@ -22,7 +22,11 @@ const ContentDisplay = (content) => {
     <main role="main" className={styles.contentDisplay}>
       <Columns numberOfColumns={1}>
         <h1>{content.headline}</h1>
-        <span className={styles.contentDateTime}>{content.createdAt}</span>
+        {content.createdAt && (
+          <span className={styles.contentDisplayDateTime}>
+            {content.createdAt}
+          </span>
+        )}
         <Asset imageId={content.mainImageId} />
         {documentToReactComponents(content.body, options)}
         {content.tags?.length > 0 && (

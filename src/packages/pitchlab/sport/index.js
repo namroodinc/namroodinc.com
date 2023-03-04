@@ -5,6 +5,9 @@ import { usePitchLabStore } from "../stores";
 import Table from "../../../components/table";
 import PlayingArea from "../PlayingArea";
 
+import styles from "./styles.module.scss";
+import Columns from "../../../components/columns";
+
 const Sport = observer(() => {
   const heatMapStore = usePitchLabStore("heatMapStore");
   const teamsStore = usePitchLabStore("teamsStore");
@@ -27,34 +30,38 @@ const Sport = observer(() => {
   }
 
   return (
-    <div>
-      <h1>{sport}</h1>
-      <Table
-        columns={["Team", "Stadium (capacity)"]}
-        rows={teams.map((team) => [
-          <Link to={`/packages/pitchlab/${sport}/team/${team.teamId}`}>
-            {team.fullName}
-          </Link>,
-          `${team.stadium} (${team.stadiumCapacity.toLocaleString()})`
-        ])}
-      />
+    <main role="main" className={styles.contentDisplay}>
+      <Columns numberOfColumns={1}>
+        <h1 className={styles.capitalize}>{sport}</h1>
 
-      <PlayingArea
-        strokeColor="#fbfbfb"
-        dataLayer={heatMapStore.heatMapData}
-        isLandscape={false}
-        sport={sport}
-        showGrid
-      />
-      <PlayingArea
-        fillColor={"#ccc"}
-        fullPitchView={false}
-        strokeColor="#fbfbfb"
-        dataLayer={heatMapStore.heatMapData}
-        showGrid
-        sport={sport}
-      />
-    </div>
+        <Table
+          columns={["Team", "Stadium (capacity)"]}
+          rows={teams.map((team) => [
+            <Link to={`/packages/pitchlab/${sport}/team/${team.teamId}`}>
+              {team.fullName}
+            </Link>,
+            `${team.stadium} (${team.stadiumCapacity.toLocaleString()})`
+          ])}
+        />
+
+        <PlayingArea
+          strokeColor="#fbfbfb"
+          dataLayer={heatMapStore.heatMapData}
+          isLandscape={false}
+          sport={sport}
+          showGrid
+        />
+
+        <PlayingArea
+          fillColor={"#ccc"}
+          fullPitchView={false}
+          strokeColor="#fbfbfb"
+          dataLayer={heatMapStore.heatMapData}
+          showGrid
+          sport={sport}
+        />
+      </Columns>
+    </main>
   );
 });
 
