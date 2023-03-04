@@ -19,7 +19,7 @@ const Sport = observer(() => {
   }, [teamsStore, sport]);
 
   useEffect(() => {
-    heatMapStore.fetchHeatMap(sport, mapLayer, "01");
+    heatMapStore.fetchHeatMap(sport, mapLayer, "02");
   }, [heatMapStore, sport]);
 
   if (!teams) {

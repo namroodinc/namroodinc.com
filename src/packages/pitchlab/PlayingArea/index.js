@@ -13,6 +13,7 @@ function PlayingArea(props) {
     fullPitchView,
     isLandscape,
     dataLayer,
+    onClick,
     padding,
     showGrid,
     sport,
@@ -71,18 +72,18 @@ function PlayingArea(props) {
     <svg
       height={heightWithPadding}
       width={widthWithPadding}
-      // onClick={(event) => {
-      //   // get x and y co-ordinates of click using pointer instead of mouse minus padding and converting the co-ordinates to percentages
-      //   const x =
-      //     (event.clientX -
-      //       event.target.getBoundingClientRect().left -
-      //       padding) /
-      //     width;
-      //   const y =
-      //     (event.clientY - event.target.getBoundingClientRect().top - padding) /
-      //     height;
-      //   console.log({ x, y });
-      // }}
+      onClick={(event) => {
+        // get x and y co-ordinates of click using pointer instead of mouse minus padding and converting the co-ordinates to percentages
+        const x =
+          (event.clientX -
+            event.target.getBoundingClientRect().left -
+            padding) /
+          width;
+        const y =
+          (event.clientY - event.target.getBoundingClientRect().top - padding) /
+          height;
+        onClick({ x, y });
+      }}
     >
       <g>
         <rect
@@ -237,12 +238,13 @@ function PlayingArea(props) {
 }
 
 PlayingArea.defaultProps = {
+  dataLayer: {},
   fillColor: "green",
   gridColumns: 16,
   gridRows: 12,
   fullPitchView: true,
   isLandscape: true,
-  dataLayer: {},
+  onClick: () => {},
   padding: 20,
   showGrid: false,
   sport: "soccer",
@@ -252,13 +254,14 @@ PlayingArea.defaultProps = {
 };
 
 PlayingArea.propTypes = {
+  dataLayer: propTypes.object,
   fillColor: propTypes.string,
   gridColumns: propTypes.number,
   gridRows: propTypes.number,
   fullPitchView: propTypes.bool,
   isLandscape: propTypes.bool,
-  dataLayer: propTypes.object,
   padding: propTypes.number,
+  onClick: propTypes.func,
   showGrid: propTypes.bool,
   sport: propTypes.oneOf(["soccer", "basketball"]),
   strokeColor: propTypes.string,

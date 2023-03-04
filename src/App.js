@@ -10,6 +10,7 @@ import Sport from "./packages/pitchlab/sport";
 
 import "./App.css";
 import Team from "./packages/pitchlab/team";
+import DataMaker from "./packages/pitchlab/dataMaker";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
             <Route path="packages/pitchlab" element={<PitchLabLayout />}>
               <Route index element={<PitchLab />} />
               <Route path=":sport" element={<Sport />} />
+              <Route path=":sport/datamaker" element={<DataMaker />} />
               <Route path=":sport/team/:teamId" element={<Team />} />
             </Route>
           </Route>
