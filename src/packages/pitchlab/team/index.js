@@ -27,17 +27,15 @@ const Team = observer((props) => {
         <h1>{team.fullName}</h1>
 
         <span className={styles.contentDisplayAdditionalInfo}>
-          {team.stadium} ({team.stadiumCapacity.toLocaleString()} capacity)
-        </span>
-
-        <span className={styles.contentDisplayAdditionalInfo}>
-          {team.cityBasedIn}, {team.countryBasedIn}
+          {team.stadium} ({team.stadiumCapacity.toLocaleString()} capacity).{" "}
+          {team.cityBasedIn}, {team.countryBasedIn}.
         </span>
 
         <PlayingArea
           sport={sport}
           teams={[
             {
+              ...team,
               players: teamInFormation
             }
           ]}
@@ -47,9 +45,11 @@ const Team = observer((props) => {
           sport={sport}
           teams={[
             {
+              ...team,
               players: teamInFormation
             },
             {
+              ...team,
               players: teamInFormation
             }
           ]}

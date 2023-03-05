@@ -1,27 +1,23 @@
 import { action, computed, makeObservable, observable } from "mobx";
 
 export class TeamsStore {
-  teamFormation = {
-    config: [1, 4, 4, 2],
-    configPositionTypes: ["GK", "DF", "MF", "FW"]
-  };
   isLoading = true;
   team = {
+    formation: [],
     players: []
   };
   teams = [];
 
   constructor() {
     makeObservable(this, {
-      teamFormation: observable,
       isLoading: observable,
       team: observable,
       teams: observable,
       fetchTeam: action,
-      teamInFormation: computed,
       fetchTeams: action,
       resetTeam: action,
-      resetTeams: action
+      resetTeams: action,
+      teamInFormation: computed
     });
   }
 
@@ -35,32 +31,15 @@ export class TeamsStore {
     this.team = data;
   };
 
-  // todo - this is a bit of a mess, but it works for now
-  get teamInFormation() {
-    const { config, configPositionTypes } = this.teamFormation;
-    const { players } = this.team;
+  fetchFormation = async (sport, formationId) => {
+    this.isLoading = true;
+    const url = `/api/static/${sport}/formation/${formationId}`;
+    const response = await fetch(url);
+    const data = await response.json();
+    this.isLoading = false;
 
-    const playersInFormation = [];
-
-    config.forEach((configPositionType, i) => {
-      const positionType = configPositionTypes[i];
-      const playersForPositionType = players.filter(
-        (player) => player.position === positionType
-      );
-
-      const playersForPositionTypeInFormation = [];
-
-      for (let i = 0; i < configPositionType; i++) {
-        playersForPositionTypeInFormation.push(
-          playersForPositionType[i % playersForPositionType.length]
-        );
-      }
-
-      playersInFormation.push(playersForPositionTypeInFormation);
-    });
-
-    return playersInFormation;
-  }
+    this.team = data;
+  };
 
   fetchTeams = async (sport, sortOrder = "asc") => {
     const url = `/api/static/${sport}/teams/${sortOrder}`;
@@ -72,6 +51,7 @@ export class TeamsStore {
 
   resetTeam = () => {
     this.team = {
+      formation: [],
       players: []
     };
   };
@@ -79,4 +59,27 @@ export class TeamsStore {
   resetTeams = () => {
     this.teams = [];
   };
+
+  // todo - this is a bit of a mess, but it works for now
+  get teamInFormation() {
+    // map through team formation and return a player matching the position and only use the player once
+    let players = [];
+    this.team.formation.forEach((position) => {
+      const player = this.team.players.find((player) => {
+        return (
+          player.position === position.position &&
+          !players.find((_player) => _player.lastName === player.lastName)
+        );
+      });
+      if (player) {
+        players.push({
+          ...player,
+          x: position.x,
+          y: position.y
+        });
+      }
+    });
+
+    return players;
+  }
 }

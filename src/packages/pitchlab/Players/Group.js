@@ -4,6 +4,8 @@ import propTypes from "prop-types";
 const Group = (props) => {
   const { colors, padding, players, ...rest } = props;
 
+  console.log(players);
+
   const PlayerMarker = (player) => {
     return (
       <>

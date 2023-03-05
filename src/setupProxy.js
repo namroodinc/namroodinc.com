@@ -109,7 +109,19 @@ module.exports = function (app) {
 
     const { data: players } = parsedPlayersData;
 
-    res.json({ ...team, players });
+    const formationData = fs.readFileSync(
+      path.join(
+        __dirname,
+        `./packages/pitchlab/api/static/${sport}/formation/${team.defaultFormation}.csv`
+      ),
+      "utf8"
+    );
+
+    const parsedFormationData = Papa.parse(formationData, papaParseOptions);
+
+    const { data: formation } = parsedFormationData;
+
+    res.json({ ...team, formation, players });
   });
 
   app.get("/api/static/:sport/:dataLayerType/:id", (req, res) => {
@@ -133,5 +145,23 @@ module.exports = function (app) {
     const { data: heatmapData } = parsedData;
 
     res.json({ data: heatmapData, dataLayerType });
+  });
+
+  app.get("/api/static/:sport/formation/:formationId", (req, res) => {
+    const { sport, formationId } = req.params;
+
+    const data = fs.readFileSync(
+      path.join(
+        __dirname,
+        `./packages/pitchlab/api/static/${sport}/formation/${formationId}.csv`
+      ),
+      "utf8"
+    );
+
+    const parsedData = Papa.parse(data, papaParseOptions);
+
+    const { data: formationData } = parsedData;
+
+    res.json({ formationData });
   });
 };

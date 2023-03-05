@@ -2,7 +2,6 @@ import React, { useMemo } from "react";
 import propTypes from "prop-types";
 import * as d3 from "d3";
 
-import { PlayerGrouper } from "../Players";
 import { playingAreaConfig } from "./utils";
 
 function PlayingArea(props) {
@@ -67,6 +66,8 @@ function PlayingArea(props) {
       };
     }
   }, [dataLayer]);
+
+  console.log(teams);
 
   return (
     <svg
@@ -222,15 +223,40 @@ function PlayingArea(props) {
       </g>
       <g transform={`translate(${padding}, ${padding})`}>
         {teams.map((team, i) => (
-          <PlayerGrouper
-            key={i}
-            height={height}
-            isLandscape={isLandscape}
-            padding={padding}
-            width={fullPitchView ? width / teams.length : width / 2}
-            index={i}
-            {...team}
-          />
+          <g key={i}>
+            {team.players.map((player, j) => {
+              let x = (width / teams.length) * (player.x / 100);
+              let y =
+                height * ((isLandscape ? player.y : 100 - player.y) / 100);
+
+              if (i > 0) {
+                x = width - x;
+                y = height - y;
+              }
+
+              return (
+                <g key={j}>
+                  <circle
+                    cx={isLandscape ? x : y}
+                    cy={isLandscape ? y : x}
+                    r={10}
+                    fill={team.brandColor}
+                  />
+                  <text
+                    x={isLandscape ? x : y}
+                    y={isLandscape ? y : x}
+                    fontSize={10}
+                    fill="#fff"
+                    // vertically center the text and align the bottom of the text to the circle
+                    alignmentBaseline="bottom"
+                    textAnchor="middle"
+                  >
+                    {player.lastName}
+                  </text>
+                </g>
+              );
+            })}
+          </g>
         ))}
       </g>
     </svg>

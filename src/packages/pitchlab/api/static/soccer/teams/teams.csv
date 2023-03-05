@@ -1,7 +1,7 @@
-teamId,fullName,stadium,stadiumCapacity,founded,cityBasedIn,countryBasedIn,brandColor,sport
-CHE,Chelsea FC,Stamford Bridge,40853,1905,London,England,#034694,soccer
-MUFC,Manchester United FC,Old Trafford,74879,1878,Manchester,England,#E20E0E,soccer
-FCB,FC Barcelona,Camp Nou,99354,1899,Barcelona,Spain,#A50044,soccer
-ACM,AC Milan,San Siro,80018,1899,Milan,Italy,#DA020E,soccer
-PSG,Paris Saint-Germain FC,Parc des Princes,47929,1970,Paris,France,#0D2B56,soccer
-FCBM,FC Bayern Munich,Allianz Arena,75000,1900,Munich,Germany,#DC052D,soccer
+teamId,fullName,stadium,stadiumCapacity,founded,cityBasedIn,countryBasedIn,brandColor,defaultFormation,sport
+CHE,Chelsea FC,Stamford Bridge,40853,1905,London,England,#034694,442,soccer
+MUFC,Manchester United FC,Old Trafford,74879,1878,Manchester,England,#E20E0E,442,soccer
+FCB,FC Barcelona,Camp Nou,99354,1899,Barcelona,Spain,#A50044,442,soccer
+ACM,AC Milan,San Siro,80018,1899,Milan,Italy,#DA020E,442,soccer
+PSG,Paris Saint-Germain FC,Parc des Princes,47929,1970,Paris,France,#0D2B56,442,soccer
+FCBM,FC Bayern Munich,Allianz Arena,75000,1900,Munich,Germany,#DC052D,442,soccer
