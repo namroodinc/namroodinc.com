@@ -6,7 +6,6 @@ import { playingAreaConfig } from "./utils";
 
 function PlayingArea(props) {
   const {
-    fillColor,
     gridColumns,
     gridRows,
     fullPitchView,
@@ -16,10 +15,12 @@ function PlayingArea(props) {
     padding,
     showGrid,
     sport,
-    strokeColor,
     strokeWidth,
     teams
   } = props;
+
+  const fillColor = props.fillColor || playingAreaConfig[sport].fillColor;
+  const strokeColor = props.strokeColor || playingAreaConfig[sport].strokeColor;
 
   const { height, width, playingAreaFull, playingAreaHalf } = useMemo(() => {
     const { height, width, full, half } = playingAreaConfig[sport];
@@ -67,14 +68,11 @@ function PlayingArea(props) {
     }
   }, [dataLayer]);
 
-  console.log(teams);
-
   return (
     <svg
       height={heightWithPadding}
       width={widthWithPadding}
       onClick={(event) => {
-        // get x and y co-ordinates of click using pointer instead of mouse minus padding and converting the co-ordinates to percentages
         const x =
           (event.clientX -
             event.target.getBoundingClientRect().left -
@@ -150,13 +148,12 @@ function PlayingArea(props) {
                   : `translate(0, ${height}) rotate(180) scale(-1, 1)`
               }
             >
-              {/* create a 2d density map using the x and y co-ordinates */}
               {d3
                 .contourDensity()
                 .x((d) => d.x)
                 .y((d) => d.y)
                 .size([width, height])
-                .bandwidth(20)(
+                .bandwidth(playingAreaConfig[sport].heatMapBandwidth || 20)(
                   dataLayer.data.reduce((acc, player) => {
                     if (player.x && player.y) {
                       acc.push({
@@ -225,7 +222,9 @@ function PlayingArea(props) {
         {teams.map((team, i) => (
           <g key={i}>
             {team.players.map((player, j) => {
-              let x = (width / teams.length) * (player.x / 100);
+              let x =
+                (fullPitchView ? width / teams.length : width / 2) *
+                (player.x / 100);
               let y =
                 height * ((isLandscape ? player.y : 100 - player.y) / 100);
 
@@ -247,7 +246,6 @@ function PlayingArea(props) {
                     y={isLandscape ? y : x}
                     fontSize={10}
                     fill="#fff"
-                    // vertically center the text and align the bottom of the text to the circle
                     alignmentBaseline="bottom"
                     textAnchor="middle"
                   >
@@ -265,7 +263,7 @@ function PlayingArea(props) {
 
 PlayingArea.defaultProps = {
   dataLayer: {},
-  fillColor: "green",
+  fillColor: null,
   gridColumns: 16,
   gridRows: 12,
   fullPitchView: true,
@@ -274,7 +272,7 @@ PlayingArea.defaultProps = {
   padding: 20,
   showGrid: false,
   sport: "soccer",
-  strokeColor: "white",
+  strokeColor: null,
   strokeWidth: 2,
   teams: []
 };

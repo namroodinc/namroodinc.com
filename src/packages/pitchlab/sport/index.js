@@ -22,7 +22,7 @@ const Sport = observer(() => {
   }, [teamsStore, sport]);
 
   useEffect(() => {
-    heatMapStore.fetchHeatMap(sport, mapLayer, "02");
+    heatMapStore.fetchHeatMap(sport, mapLayer, "03");
   }, [heatMapStore, sport]);
 
   if (!teams) {
@@ -45,7 +45,6 @@ const Sport = observer(() => {
         />
 
         <PlayingArea
-          strokeColor="#fbfbfb"
           dataLayer={heatMapStore.heatMapData}
           isLandscape={false}
           sport={sport}

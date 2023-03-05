@@ -2,9 +2,12 @@ import * as d3 from "d3";
 
 export const playingAreaConfig = {
   soccer: {
-    width: 720, // a soccer pitch is 120 yards long
+    fillColor: "#138000",
+    heatMapBandwidth: 20,
     height: 480, // a soccer pitch is 80 yards wide
     padding: 20,
+    strokeColor: "#FFFFFF",
+    width: 720, // a soccer pitch is 120 yards long
     full: ({ fillColor, height, strokeColor, strokeWidth, width }) => (
       <g>
         <rect
@@ -155,9 +158,12 @@ export const playingAreaConfig = {
     )
   },
   basketball: {
-    width: 720, // a basketball court is 30.62 yards long
+    fillColor: "#FDCB9E",
+    heatMapBandwidth: 10,
     height: 384, // a basketball court is 16.4 yards wide
     padding: 20,
+    strokeColor: "#000000",
+    width: 720, // a basketball court is 30.62 yards long
     full: ({ fillColor, height, strokeColor, strokeWidth, width }) => (
       <g>
         <rect
