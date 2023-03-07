@@ -66,7 +66,7 @@ export class BlogPostStore {
           id: item.sys.id,
           headline: item.fields.headline,
           createdAt: formattedDate,
-          mainImageId: item.fields.mainImage.sys.id,
+          mainImageId: item.fields.mainImage?.sys.id,
           description: item.fields.description
         };
       })
@@ -92,7 +92,8 @@ export class BlogPostStore {
       headline: data.fields.headline,
       createdAt: formattedDate,
       body: data.fields.blogPostBody,
-      mainImageId: data.fields.mainImage.sys.id,
+      websiteUrl: data.fields.websiteUrl,
+      mainImageId: data.fields.mainImage?.sys.id,
       description: data.fields.description,
       tags: data.metadata.tags.map((tag) => {
         return this.tags.find((item) => item.id === tag.sys.id);

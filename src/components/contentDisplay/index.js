@@ -29,6 +29,14 @@ const ContentDisplay = (content) => {
         )}
         <Asset imageId={content.mainImageId} />
         {documentToReactComponents(content.body, options)}
+        {content.websiteUrl && (
+          <Button
+            buttonType="anchor"
+            label="Visit Website"
+            to={content.websiteUrl}
+            target="_blank"
+          />
+        )}
         {content.tags?.length > 0 && (
           <div className={styles.tags}>
             <h6>Tags</h6>

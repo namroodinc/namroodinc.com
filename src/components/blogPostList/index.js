@@ -11,7 +11,7 @@ const BlogPostList = observer(() => {
 
   return (
     <Columns numberOfColumns={1}>
-      <Columns>
+      <Columns numberOfColumns={4}>
         {blogPostStore.blogPostList.map((post) => {
           return (
             <Card

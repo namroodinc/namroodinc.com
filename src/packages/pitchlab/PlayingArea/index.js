@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import propTypes from "prop-types";
 import * as d3 from "d3";
 
@@ -235,22 +235,42 @@ function PlayingArea(props) {
 
               return (
                 <g key={j}>
-                  <circle
-                    cx={isLandscape ? x : y}
-                    cy={isLandscape ? y : x}
-                    r={10}
-                    fill={team.brandColor}
-                  />
-                  <text
-                    x={isLandscape ? x : y}
-                    y={isLandscape ? y : x}
-                    fontSize={10}
-                    fill="#fff"
-                    alignmentBaseline="bottom"
-                    textAnchor="middle"
-                  >
-                    {player.lastName}
-                  </text>
+                  <g>
+                    <circle
+                      cx={isLandscape ? x : y}
+                      cy={isLandscape ? y : x}
+                      r={10}
+                      fill={team.brandColor}
+                      stroke="#fff"
+                      strokeWidth={2}
+                    />
+                    <text
+                      x={isLandscape ? x : y}
+                      y={isLandscape ? y : x}
+                      dx={0}
+                      dy={0}
+                      textAnchor="middle"
+                      alignmentBaseline="central"
+                      fontSize={10}
+                      fill="#fff"
+                    >
+                      {player.number}
+                    </text>
+                  </g>
+                  <g>
+                    <text
+                      x={isLandscape ? x : y}
+                      y={isLandscape ? y : x}
+                      dx={0}
+                      dy={20}
+                      textAnchor="middle"
+                      alignmentBaseline="central"
+                      fontSize={10}
+                      fill="#fff"
+                    >
+                      {player.firstName[0]}. {player.lastName}
+                    </text>
+                  </g>
                 </g>
               );
             })}
