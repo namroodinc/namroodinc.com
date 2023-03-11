@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import propTypes from "prop-types";
 import * as d3 from "d3";
 
@@ -240,7 +240,9 @@ function PlayingArea(props) {
                       cx={isLandscape ? x : y}
                       cy={isLandscape ? y : x}
                       r={10}
-                      fill={team.brandColor}
+                      fill={
+                        player.position === "GK" ? "green" : team.brandColor
+                      }
                       stroke="#fff"
                       strokeWidth={2}
                     />

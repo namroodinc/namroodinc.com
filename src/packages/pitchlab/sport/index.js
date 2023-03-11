@@ -1,12 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { observer } from "mobx-react-lite";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { usePitchLabStore } from "../stores";
-import Table from "../../../components/table";
-import PlayingArea from "../PlayingArea";
 
 import styles from "./styles.module.scss";
 import Columns from "../../../components/columns";
+import SportSoccer from "./Soccer";
+import SportBasketball from "./Basketball";
 
 const Sport = observer(() => {
   const heatMapStore = usePitchLabStore("heatMapStore");
@@ -29,36 +29,22 @@ const Sport = observer(() => {
     return <div>Loading...</div>;
   }
 
+  const content = useMemo(() => {
+    switch (sport) {
+      case "soccer":
+        return <SportSoccer />;
+      case "basketball":
+        return <SportBasketball />;
+      default:
+        return <div>{sport} not available</div>;
+    }
+  }, [sport]);
+
   return (
     <main role="main" className={styles.contentDisplay}>
       <Columns numberOfColumns={1}>
         <h1 className={styles.capitalize}>{sport}</h1>
-
-        <Table
-          columns={["Team", "Stadium (capacity)"]}
-          rows={teams.map((team) => [
-            <Link to={`/packages/pitchlab/${sport}/team/${team.teamId}`}>
-              {team.fullName}
-            </Link>,
-            `${team.stadium} (${team.stadiumCapacity.toLocaleString()})`
-          ])}
-        />
-
-        <PlayingArea
-          dataLayer={heatMapStore.heatMapData}
-          isLandscape={false}
-          sport={sport}
-          showGrid
-        />
-
-        <PlayingArea
-          fillColor={"#ccc"}
-          fullPitchView={false}
-          strokeColor="#fbfbfb"
-          dataLayer={heatMapStore.heatMapData}
-          showGrid
-          sport={sport}
-        />
+        {content}
       </Columns>
     </main>
   );
