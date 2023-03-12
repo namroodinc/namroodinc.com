@@ -17,6 +17,7 @@ function Marker({
   width,
 
   // additionals
+  lineFrom,
   showPlayerNames,
   team,
   teamIndex,
@@ -59,12 +60,12 @@ function Marker({
             {...defaultMarkerPropsWithOverrides}
           />
         );
-      case "diamond":
+      case "star":
         return (
           <path
             d={d3
               .symbol()
-              .type(d3.symbolDiamond)
+              .type(d3.symbolStar)
               .size(Math.pow(markerSize, 2) * 2)()}
             transform={`translate(${isLandscape ? x : y}, ${
               isLandscape ? y : x
@@ -111,8 +112,48 @@ function Marker({
   return (
     <g>
       <g>
+        {lineFrom && (
+          <g>
+            <line
+              x1={isLandscape ? x : y}
+              y1={isLandscape ? y : x}
+              x2={isLandscape ? lineFrom.x : lineFrom.y}
+              y2={isLandscape ? lineFrom.y : lineFrom.x}
+              stroke={team.brandColor || brandColor}
+              strokeWidth={1}
+            />
+            <circle
+              cx={isLandscape ? lineFrom.x : lineFrom.y}
+              cy={isLandscape ? lineFrom.y : lineFrom.x}
+              r={markerSize / 4}
+              fill={team.brandColor || brandColor}
+              stroke="#fff"
+              strokeWidth={1}
+            />
+            <text
+              x={isLandscape ? (x + lineFrom.x) / 2 : (y + lineFrom.y) / 2}
+              y={isLandscape ? (y + lineFrom.y) / 2 : (x + lineFrom.x) / 2}
+              dx={0}
+              dy={0}
+              textAnchor="middle"
+              alignmentBaseline="central"
+              fontSize={10}
+              fill={team.brandColor || brandColor}
+              transform={`rotate(${
+                isLandscape
+                  ? Math.atan((y - lineFrom.y) / (x - lineFrom.x)) *
+                    (180 / Math.PI)
+                  : Math.atan((x - lineFrom.x) / (y - lineFrom.y)) *
+                    (180 / Math.PI)
+              }, ${
+                isLandscape ? (x + lineFrom.x) / 2 : (y + lineFrom.y) / 2
+              }, ${isLandscape ? (y + lineFrom.y) / 2 : (x + lineFrom.x) / 2})`}
+            >
+              77'
+            </text>
+          </g>
+        )}
         {markerShapeSwitch}
-
         {marker.number && (
           <text
             x={isLandscape ? x : y}
@@ -134,7 +175,7 @@ function Marker({
             x={isLandscape ? x : y}
             y={isLandscape ? y : x}
             dx={0}
-            dy={20}
+            dy={-20}
             textAnchor="middle"
             alignmentBaseline="central"
             fontSize={10}
@@ -155,12 +196,18 @@ Marker.propTypes = {
   height: propTypes.number,
   marker: propTypes.object,
   markerProps: propTypes.object,
-  markerShape: propTypes.oneOf(["circle", "diamond", "square", "triangle"]),
+  markerShape: propTypes.oneOf(["circle", "square", "star", "triangle"]),
   markerSize: propTypes.number,
   isLandscape: propTypes.bool,
   width: propTypes.number,
 
   // additionals
+  lineFrom: propTypes.shape({
+    outcome: propTypes.oneOf(["success", "failure"]),
+    text: propTypes.string,
+    x: propTypes.number,
+    y: propTypes.number
+  }),
   showPlayerNames: propTypes.bool,
   team: propTypes.object,
   teamIndex: propTypes.number,
@@ -180,6 +227,12 @@ Marker.defaultProps = {
   width: 0,
 
   // additionals
+  lineFrom: {
+    outcome: null,
+    text: null,
+    x: 0,
+    y: 0
+  },
   showPlayerNames: false,
   team: {},
   teamIndex: 0,
@@ -438,8 +491,13 @@ function PlayingArea(props) {
               height={height}
               isLandscape={isLandscape}
               marker={marker}
-              markerShape="triangle"
+              markerShape="square"
               width={width}
+              lineFrom={{
+                // random x and y
+                x: Math.floor(Math.random() * width),
+                y: Math.floor(Math.random() * height)
+              }}
             />
           ))}
       </g>

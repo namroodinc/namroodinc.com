@@ -165,7 +165,7 @@ const SportSoccer = observer(() => {
                 brandColor={team.brandColor}
                 fillColor="#97FFFF"
                 fullPitchView={false}
-                isLandscape={false}
+                isLandscape={isLandscape}
                 strokeColor="#3399CC"
                 markers={team.formation}
               />

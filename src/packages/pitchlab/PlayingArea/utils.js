@@ -8,7 +8,7 @@ export const playingAreaConfig = {
     padding: 20,
     strokeColor: "#FFFFFF",
     width: 720, // a soccer pitch is 120 yards long
-    full: ({ fillColor, height, strokeColor, strokeWidth, width }) => (
+    full: ({ height, strokeColor, strokeWidth, width }) => (
       <g>
         <rect
           x={0}
@@ -54,6 +54,15 @@ export const playingAreaConfig = {
       width
     }) => (
       <>
+        <rect
+          x={-(width * 0.0225)}
+          y={height / 2 - height * 0.05}
+          width={width * 0.0225}
+          height={height * 0.1}
+          fill={fillColor}
+          stroke={strokeColor}
+          strokeWidth={strokeWidth}
+        />
         <path
           d={d3.arc()({
             innerRadius: 0,
