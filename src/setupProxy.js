@@ -69,7 +69,23 @@ module.exports = function (app) {
 
     const { data: teamsData } = parsedData;
 
-    const sortedTeamsData = teamsData.sort((a, b) => {
+    const teamsWithFormationData = teamsData.map((team) => {
+      const formationData = fs.readFileSync(
+        path.join(
+          __dirname,
+          `./packages/pitchlab/api/static/${sport}/formation/${team.defaultFormation}.csv`
+        ),
+        "utf8"
+      );
+
+      const parsedFormationData = Papa.parse(formationData, papaParseOptions);
+
+      const { data: formation } = parsedFormationData;
+
+      return { ...team, formation };
+    });
+
+    const sortedTeamsData = teamsWithFormationData.sort((a, b) => {
       if (sortOrder === "asc") {
         return a.fullName < b.fullName ? 1 : -1;
       } else {

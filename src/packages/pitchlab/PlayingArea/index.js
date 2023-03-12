@@ -4,16 +4,201 @@ import * as d3 from "d3";
 
 import { playingAreaConfig } from "./utils";
 
+function Marker({
+  // basics
+  brandColor,
+  fullPitchView,
+  height,
+  isLandscape,
+  marker,
+  markerProps,
+  markerShape,
+  markerSize,
+  width,
+
+  // additionals
+  showPlayerNames,
+  team,
+  teamIndex,
+  teams
+}) {
+  let x =
+    (fullPitchView
+      ? teams.length > 1
+        ? width / teams.length
+        : width * 0.75
+      : width / 2) *
+    (marker.x / 100);
+  let y = height * ((isLandscape ? marker.y : 100 - marker.y) / 100);
+
+  if (teamIndex > 0) {
+    x = width - x;
+    y = height - y;
+  }
+
+  const markerShapeSwitch = useMemo(() => {
+    const defaultMarkerProps = {
+      fill: marker.position === "GK" ? "green" : team.brandColor || brandColor,
+      stroke: "#fff",
+      strokeWidth: 0
+    };
+
+    const defaultMarkerPropsWithOverrides = {
+      ...defaultMarkerProps,
+      ...markerProps
+    };
+
+    switch (markerShape) {
+      case "square":
+        return (
+          <rect
+            x={isLandscape ? x - markerSize : y - markerSize}
+            y={isLandscape ? y - markerSize : x - markerSize}
+            width={markerSize * 2}
+            height={markerSize * 2}
+            {...defaultMarkerPropsWithOverrides}
+          />
+        );
+      case "diamond":
+        return (
+          <path
+            d={d3
+              .symbol()
+              .type(d3.symbolDiamond)
+              .size(Math.pow(markerSize, 2) * 2)()}
+            transform={`translate(${isLandscape ? x : y}, ${
+              isLandscape ? y : x
+            })`}
+            {...defaultMarkerPropsWithOverrides}
+          />
+        );
+      case "triangle":
+        return (
+          <path
+            d={d3
+              .symbol()
+              .type(d3.symbolTriangle)
+              .size(Math.pow(markerSize, 2) * 2)()}
+            transform={`translate(${isLandscape ? x : y}, ${
+              isLandscape ? y : x
+            })`}
+            {...defaultMarkerPropsWithOverrides}
+          />
+        );
+      case "circle":
+      default:
+        return (
+          <circle
+            cx={isLandscape ? x : y}
+            cy={isLandscape ? y : x}
+            r={markerSize}
+            {...defaultMarkerPropsWithOverrides}
+          />
+        );
+    }
+  }, [
+    brandColor,
+    markerProps,
+    markerShape,
+    markerSize,
+    marker,
+    team,
+    isLandscape,
+    x,
+    y
+  ]);
+
+  return (
+    <g>
+      <g>
+        {markerShapeSwitch}
+
+        {marker.number && (
+          <text
+            x={isLandscape ? x : y}
+            y={isLandscape ? y : x}
+            dx={0}
+            dy={0}
+            textAnchor="middle"
+            alignmentBaseline="central"
+            fontSize={10}
+            fill="#fff"
+          >
+            {marker.number}
+          </text>
+        )}
+      </g>
+      {showPlayerNames && (
+        <g>
+          <text
+            x={isLandscape ? x : y}
+            y={isLandscape ? y : x}
+            dx={0}
+            dy={20}
+            textAnchor="middle"
+            alignmentBaseline="central"
+            fontSize={10}
+            fill="#fff"
+          >
+            {marker.firstName[0]}. {marker.lastName}
+          </text>
+        </g>
+      )}
+    </g>
+  );
+}
+
+Marker.propTypes = {
+  // basics
+  brandColor: propTypes.string,
+  fullPitchView: propTypes.bool,
+  height: propTypes.number,
+  marker: propTypes.object,
+  markerProps: propTypes.object,
+  markerShape: propTypes.oneOf(["circle", "diamond", "square", "triangle"]),
+  markerSize: propTypes.number,
+  isLandscape: propTypes.bool,
+  width: propTypes.number,
+
+  // additionals
+  showPlayerNames: propTypes.bool,
+  team: propTypes.object,
+  teamIndex: propTypes.number,
+  teams: propTypes.array
+};
+
+Marker.defaultProps = {
+  // basics
+  brandColor: "#000",
+  fullPitchView: false,
+  height: 0,
+  isLandscape: true,
+  marker: {},
+  markerProps: {},
+  markerShape: "circle",
+  markerSize: 10,
+  width: 0,
+
+  // additionals
+  showPlayerNames: false,
+  team: {},
+  teamIndex: 0,
+  teams: []
+};
+
 function PlayingArea(props) {
   const {
+    brandColor,
     gridColumns,
     gridRows,
     fullPitchView,
     isLandscape,
     dataLayer,
+    markers,
     onClick,
     padding,
     showGrid,
+    showPlayerNames,
     sport,
     strokeWidth,
     teams
@@ -220,80 +405,61 @@ function PlayingArea(props) {
         </g>
       </g>
       <g transform={`translate(${padding}, ${padding})`}>
-        {teams.map((team, i) => (
-          <g key={i}>
-            {team.players.map((player, j) => {
-              let x =
-                (fullPitchView ? width / teams.length : width / 2) *
-                (player.x / 100);
-              let y =
-                height * ((isLandscape ? player.y : 100 - player.y) / 100);
-
-              if (i > 0) {
-                x = width - x;
-                y = height - y;
-              }
-
-              return (
-                <g key={j}>
-                  <g>
-                    <circle
-                      cx={isLandscape ? x : y}
-                      cy={isLandscape ? y : x}
-                      r={10}
-                      fill={
-                        player.position === "GK" ? "green" : team.brandColor
-                      }
-                      stroke="#fff"
-                      strokeWidth={2}
-                    />
-                    <text
-                      x={isLandscape ? x : y}
-                      y={isLandscape ? y : x}
-                      dx={0}
-                      dy={0}
-                      textAnchor="middle"
-                      alignmentBaseline="central"
-                      fontSize={10}
-                      fill="#fff"
-                    >
-                      {player.number}
-                    </text>
-                  </g>
-                  <g>
-                    <text
-                      x={isLandscape ? x : y}
-                      y={isLandscape ? y : x}
-                      dx={0}
-                      dy={20}
-                      textAnchor="middle"
-                      alignmentBaseline="central"
-                      fontSize={10}
-                      fill="#fff"
-                    >
-                      {player.firstName[0]}. {player.lastName}
-                    </text>
-                  </g>
-                </g>
-              );
-            })}
-          </g>
-        ))}
+        {teams.length > 0 &&
+          teams.map((team, teamIndex) => (
+            <g key={teamIndex}>
+              {team.players.map((player, j) => {
+                return (
+                  <Marker
+                    key={j}
+                    fullPitchView={fullPitchView}
+                    height={height}
+                    isLandscape={isLandscape}
+                    marker={player}
+                    markerProps={{
+                      strokeWidth: 2
+                    }}
+                    showPlayerNames={showPlayerNames}
+                    team={team}
+                    teamIndex={teamIndex}
+                    teams={teams}
+                    width={width}
+                  />
+                );
+              })}
+            </g>
+          ))}
+        {markers.length &&
+          markers.map((marker, i) => (
+            <Marker
+              key={i}
+              brandColor={brandColor}
+              fullPitchView={fullPitchView}
+              height={height}
+              isLandscape={isLandscape}
+              marker={marker}
+              markerShape="triangle"
+              width={width}
+            />
+          ))}
       </g>
     </svg>
   );
 }
 
 PlayingArea.defaultProps = {
+  brandColor: "#000",
   dataLayer: {},
   fillColor: null,
   gridColumns: 16,
   gridRows: 12,
   fullPitchView: true,
   isLandscape: true,
+  markers: [],
   onClick: () => {},
   padding: 20,
   showGrid: false,
+  showPlayerNames: false,
   sport: "soccer",
   strokeColor: null,
   strokeWidth: 2,
@@ -301,15 +467,18 @@ PlayingArea.defaultProps = {
 };
 
 PlayingArea.propTypes = {
+  brandColor: propTypes.string,
   dataLayer: propTypes.object,
   fillColor: propTypes.string,
   gridColumns: propTypes.number,
   gridRows: propTypes.number,
   fullPitchView: propTypes.bool,
   isLandscape: propTypes.bool,
+  markers: propTypes.array,
   padding: propTypes.number,
   onClick: propTypes.func,
   showGrid: propTypes.bool,
+  showPlayerNames: propTypes.bool,
   sport: propTypes.oneOf(["soccer", "basketball"]),
   strokeColor: propTypes.string,
   strokeWidth: propTypes.number,

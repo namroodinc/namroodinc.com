@@ -90,58 +90,43 @@ export const basketballPositions = [
 
 export const soccerFormations = [
   {
-    config: [1, 4, 4, 2],
-    configPositionTypes: ["GK", "DF", "MF", "FW"],
-    name: "4-4-2",
+    id: 442,
     description:
       "This is one of the most common soccer formations. It features four defenders, four midfielders, and two forwards. The midfielders are usually split into two pairs of defensive and attacking midfielders. The two forwards typically play together as a strike partnership."
   },
   {
-    config: [1, 4, 3, 3],
-    configPositionTypes: ["GK", "DF", "MF", "FW"],
-    name: "4-3-3",
+    id: 433,
     description:
       "In this formation, there are four defenders, three midfielders, and three forwards. The three forwards typically consist of a center forward and two wingers. The wingers are responsible for providing width to the team's attack."
   },
   {
-    config: [1, 3, 5, 2],
-    configPositionTypes: ["GK", "DF", "MF", "FW"],
-    name: "3-5-2",
+    id: 352,
     description:
       "This is a formation that features three defenders, five midfielders, and two forwards. The midfield is composed of three central midfielders and two wing-backs. This formation allows for a strong defensive presence and a lot of midfield control."
   },
   {
-    config: [1, 4, 2, 3],
-    configPositionTypes: ["GK", "DF", "MF", "FW"],
-    name: "4-2-3-1",
+    id: 4231,
     description:
       "This formation is often used by teams looking to control the midfield. It features four defenders, two holding midfielders, three attacking midfielders, and one forward. The attacking midfielders often play in a more advanced position than the holding midfielders, and are responsible for creating goal-scoring opportunities."
   },
   {
-    config: [1, 3, 4, 3],
-    configPositionTypes: ["GK", "DF", "MF", "FW"],
-    name: "3-4-3",
+    id: 343,
     description:
       "This is a formation that features three defenders, four midfielders, and three forwards. The midfielders are split into two pairs of central midfielders and two wing-backs. The wing-backs are responsible for providing width to the team's attack."
   },
   {
-    config: [1, 5, 4, 1],
-    configPositionTypes: ["GK", "DF", "MF", "FW"],
-    name: "4-5-1",
+    id: 451,
     description:
       "This formation features four defenders, five midfielders, and one forward. The midfielders are split into two pairs of central midfielders and two wing-backs. The wing-backs are responsible for providing width to the team's attack."
   },
+  // todo: add below formations to csv data
   {
-    config: [1, 4, 3, 2],
-    configPositionTypes: ["GK", "DF", "MF", "FW"],
-    name: "4-3-1-2",
+    id: 4312,
     description:
       "This formation features four defenders, three midfielders, one defensive midfielder, and two forwards. The midfielders are split into two pairs of central midfielders and two wing-backs. The wing-backs are responsible for providing width to the team's attack."
   },
   {
-    config: [1, 4, 1, 4],
-    configPositionTypes: ["GK", "DF", "MF", "FW"],
-    name: "4-1-4-1",
+    id: 4141,
     description:
       "This formation features four defenders, one defensive midfielder, four attacking midfielders, and one forward. The midfielders are split into two pairs of central midfielders and two wing-backs. The wing-backs are responsible for providing width to the team's attack."
   }

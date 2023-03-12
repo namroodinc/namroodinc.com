@@ -159,13 +159,18 @@ const SportSoccer = observer(() => {
       <Columns numberOfColumns={2}>
         {teams.map((team, index) => (
           <TeamWrapper {...team} sport={sport} key={index}>
-            <PlayingArea
-              sport="soccer"
-              fillColor="#97FFFF"
-              isLandscape={false}
-              key={team.id}
-              strokeColor="#3399CC"
-            />
+            <div key={team.id}>
+              <PlayingArea
+                sport="soccer"
+                brandColor={team.brandColor}
+                fillColor="#97FFFF"
+                fullPitchView={false}
+                isLandscape={false}
+                strokeColor="#3399CC"
+                markers={team.formation}
+              />
+              <span>{team.defaultFormation}</span>
+            </div>
           </TeamWrapper>
         ))}
       </Columns>

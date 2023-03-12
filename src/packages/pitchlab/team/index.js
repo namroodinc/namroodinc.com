@@ -42,8 +42,8 @@ const Team = observer((props) => {
 
         <PlayingArea
           fullPitchView={false}
-          isLandscape={false}
           sport={sport}
+          showPlayerNames
           teams={[
             {
               ...team,
@@ -54,6 +54,7 @@ const Team = observer((props) => {
 
         <PlayingArea
           sport={sport}
+          showPlayerNames
           teams={[
             {
               ...team,
