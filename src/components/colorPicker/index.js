@@ -7,9 +7,9 @@ function ColorPicker(props) {
   const { colors, onClick } = props;
 
   return (
-    <div className={styles.colorPicker}>
+    <div>
       <label className={styles.colorPickerLabel}>{props.label}</label>
-      <div>
+      <div className={styles.colorPicker}>
         {colors.map((color) => (
           <button
             className={styles.colorPickerButton}

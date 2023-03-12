@@ -17,12 +17,23 @@
       }
     }
 
-    img {
+    img,
+    svg {
+      height: auto;
+      margin: auto;
       max-width: 100%;
     }
 
     p {
       margin: 0;
+    }
+
+    code,
+    pre {
+      background: var(--code-background-color);
+      color: var(--code-text-color);
+      padding: $xs $sm;
+      border-radius: $sm;
     }
   }
 

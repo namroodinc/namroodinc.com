@@ -72,6 +72,7 @@ function PlayingArea(props) {
     <svg
       height={heightWithPadding}
       width={widthWithPadding}
+      viewBox={`0 0 ${widthWithPadding} ${heightWithPadding}`}
       onClick={(event) => {
         const x =
           (event.clientX -

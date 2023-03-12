@@ -62,3 +62,10 @@ a {
 p a {
     font-weight: 500;
 }
+
+hr {
+    border: 0;
+    border-bottom: 1px solid var(--border-color);
+    height: 0;
+        width: 100%;
+}

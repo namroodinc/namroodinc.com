@@ -17,6 +17,25 @@ function Forms(props) {
             value={props.value}
           />
         );
+      case "checkbox":
+        return <input type="checkbox" name={props.name} />;
+      case "radio":
+        return (
+          <div>
+            {props.options.map((option) => (
+              <label key={option.value}>
+                <input
+                  type="radio"
+                  name={props.name}
+                  value={option.value}
+                  checked={props.value === option.value}
+                  onChange={props.onChange}
+                />
+                {option.label}
+              </label>
+            ))}
+          </div>
+        );
       case "color":
         return <input type="color" name={props.name} />;
       case "date":
@@ -47,11 +66,10 @@ function Forms(props) {
   }, [props]);
 
   return (
-    <>
+    <div>
       <label htmlFor={props.name}>{props.label}</label>
       {input}
-      test
-    </>
+    </div>
   );
 }
 
@@ -61,6 +79,7 @@ Forms.defaultProps = {
   min: 0,
   name: "test",
   onChange: () => {},
+  options: [],
   type: "text",
   value: 5
 };
@@ -71,9 +90,21 @@ Forms.propTypes = {
   min: propTypes.number,
   name: propTypes.string.isRequired,
   onChange: propTypes.func,
+  options: propTypes.arrayOf(
+    propTypes.shape({
+      label: propTypes.string,
+      value: propTypes.oneOfType([
+        propTypes.string,
+        propTypes.number,
+        propTypes.bool
+      ])
+    })
+  ),
   type: propTypes.oneOf([
     "text",
     "range",
+    "checkbox",
+    "radio",
     "color",
     "date",
     "time",
@@ -87,7 +118,11 @@ Forms.propTypes = {
     "tel",
     "password"
   ]),
-  value: propTypes.oneOfType([propTypes.string, propTypes.number])
+  value: propTypes.oneOfType([
+    propTypes.string,
+    propTypes.number,
+    propTypes.bool
+  ])
 };
 
 export default Forms;

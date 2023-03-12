@@ -2,10 +2,11 @@ import React, { useEffect } from "react";
 import { observer } from "mobx-react-lite";
 import { useParams } from "react-router-dom";
 import { usePitchLabStore } from "../stores";
+
+import Columns from "../../../components/columns";
 import PlayingArea from "../PlayingArea";
 
 import styles from "./styles.module.scss";
-import Columns from "../../../components/columns";
 
 const Team = observer((props) => {
   const teamsStore = usePitchLabStore("teamsStore");
@@ -25,6 +26,14 @@ const Team = observer((props) => {
     <main role="main" className={styles.contentDisplay}>
       <Columns numberOfColumns={1}>
         <h1>{team.fullName}</h1>
+
+        {team.logo && (
+          <img
+            className={styles.contentDisplayLogo}
+            src={team.logo}
+            alt={`${team.fullName} logo`}
+          />
+        )}
 
         <span className={styles.contentDisplayAdditionalInfo}>
           {team.stadium} ({team.stadiumCapacity.toLocaleString()} capacity).{" "}

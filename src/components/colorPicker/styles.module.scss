@@ -1,6 +1,8 @@
 @import "../../global";
 
 .colorPicker {
+  display: grid;
+  grid-template-columns: repeat(6, $xl);
   &Button {
     border: none;
     background: none;
